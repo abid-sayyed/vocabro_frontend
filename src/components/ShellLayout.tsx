@@ -7,21 +7,18 @@ import { useDisclosure as useMantineDisclosure } from '@mantine/hooks';
 import HeaderTabs from './header/header';
 
 function ShellLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [opened, { toggle }] = useMantineDisclosure();
 
   return (
     <AppShell
       header={{ height: 60 }}
     >
-        
+
       <AppShell.Header>
-        
 
         <HeaderTabs />
-  
+
       </AppShell.Header>
 
-    
 
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
