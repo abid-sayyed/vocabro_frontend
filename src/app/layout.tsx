@@ -3,7 +3,7 @@
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
-import ShellLayout from '@/components/ShellLayout';
+import ShellLayout from '@/components/shellLayout/ShellLayout';
 
 
 export const metadata = {
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body>
         <MantineProvider>
           <ShellLayout>
-            <div>{children}</div>
+            {children}
           </ShellLayout>
 
         </MantineProvider>

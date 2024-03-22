@@ -3,15 +3,14 @@
 import { AppShell, Burger } from '@mantine/core';
 // import { useDisclosure } from '@mantine/hooks';
 
-import { useDisclosure as useMantineDisclosure } from '@mantine/hooks';
-import HeaderTabs from './header/header';
+import HeaderTabs from  '@/components/header/header';
 
 function ShellLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
   return (
-    <AppShell
-      header={{ height: 60 }}
-    >
+    
+    <AppShell header={{ height: { base: 48, sm: 60, lg: 76 } }}>
+    
 
       <AppShell.Header>
 
