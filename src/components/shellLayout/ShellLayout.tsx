@@ -3,28 +3,32 @@
 import { AppShell, Burger } from '@mantine/core';
 // import { useDisclosure } from '@mantine/hooks';
 
-import HeaderTabs from  '@/components/header/header';
+import { useDisclosure as useMantineDisclosure } from '@mantine/hooks';
+import HeaderTabs from '../header/header';
+import { Flex, Button } from '@mantine/core';
+import { Container } from '@mantine/core';
+import { Grid } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
+import classes from './shellLayoutcss.module.css';
+import { Stack } from '@mantine/core';
+
+
 
 function ShellLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
   return (
-    
-    <AppShell header={{ height: { base: 48, sm: 60, lg: 76 } }}>
-    
+    <Stack
+      // h={76}
+    >
+      <div><HeaderTabs /></div>
+      <div>{children}</div>
 
-      <AppShell.Header>
-
-        <HeaderTabs />
-
-      </AppShell.Header>
-
-
-      <AppShell.Main>{children}</AppShell.Main>
-    </AppShell>
+    </Stack>
   );
 }
 
 export default ShellLayout;
+
 
 
 

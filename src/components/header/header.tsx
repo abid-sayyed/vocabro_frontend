@@ -46,7 +46,7 @@ const user = {
 
 const tabs = [
     'Home',
-    'Orders',
+    'RWS',
     'Education',
     'Community',
     'Forums',

@@ -28,10 +28,10 @@ function HeroText() {
 
         <div className={classes.controls}>
           <Button className={classes.control} size="lg" variant="default" color="gray">
-            Book a demo
+            Start
           </Button>
           <Button className={classes.control} size="lg">
-            Purchase a license
+            Continue
           </Button>
         </div>
       </div>
