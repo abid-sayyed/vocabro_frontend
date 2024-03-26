@@ -1,74 +1,61 @@
-import { UnstyledButton, Checkbox, Text, Image, SimpleGrid } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
-import icons from './icons';
-import { IconPhoto } from '@tabler/icons-react';
-import classes from './ContinueBox.module.css';
+import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem } from '@mantine/core';
+import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
+import { Chip, Stack } from '@mantine/core';
+import styles from './ContinueBox.module.css';
 
-interface ImageCheckboxProps {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onChange?(checked: boolean): void;
-  title: string;
-  description: string;
-  image: string;
-}
 
-export function ImageCheckbox({
-  checked,
-  defaultChecked,
-  onChange,
-  title,
-  description,
-  className,
-  image,
-  ...others
-}: ImageCheckboxProps & Omit<React.ComponentPropsWithoutRef<'button'>, keyof ImageCheckboxProps>) {
-  const [value, handleChange] = useUncontrolled({
-    value: checked,
-    defaultValue: defaultChecked,
-    finalValue: false,
-    onChange,
+const icons = {
+  up: IconArrowUpRight,
+  down: IconArrowDownRight,
+};
+
+const data = [
+  { label: 'Page views', stats: '456,578', progress: 65, color: 'teal', icon: 'up' },
+  { label: 'New users', stats: '2,550', progress: 72, color: 'blue', icon: 'up' },
+  {
+    label: 'Orders',
+    stats: '4,735',
+    progress: 52,
+    color: 'red',
+    icon: 'down',
+  },
+  
+  { label: 'Page views', stats: '456,578', progress: 65, color: 'teal', icon: 'up' },
+] as const;
+
+export function ContinueBox() {
+  const stats = data.map((stat) => {
+    const Icon = icons[stat.icon];
+    return (
+      <Paper withBorder radius="md" p="xs" key={stat.label} >
+        <Group>
+          <RingProgress
+            size={80}
+            roundCaps
+            thickness={8}
+            sections={[{ value: stat.progress, color: stat.color }]}
+            label={
+              <Center>
+                <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
+              </Center>
+            }
+          />
+          <Stack 
+            align="center"
+            gap='xs'
+          >
+            <Chip defaultChecked radius="xs" variant="light">Awesome chip</Chip>
+            <Chip defaultChecked radius="xs">Awesome chip</Chip>
+            <Chip defaultChecked radius="xs">Awesome chip</Chip>
+
+          </Stack>
+
+        </Group>
+      </Paper>
+    );
   });
 
-  return (
-    <UnstyledButton
-      {...others}
-      onClick={() => handleChange(!value)}
-      data-checked={value || undefined}
-      className={classes.button}
-    >
-      <Image src={image} alt={title} width={40} height={40} />
-
-      <div className={classes.body}>
-        <Text c="dimmed" size="xs" lh={1} mb={5}>
-          {description}
-        </Text>
-        <Text fw={500} size="sm" lh={1}>
-          {title}
-        </Text>
-      </div>
-
-      <Checkbox
-        checked={value}
-        onChange={() => {}}
-        tabIndex={-1}
-        styles={{ input: { cursor: 'pointer' } }}
-      />
-    </UnstyledButton>
-  );
+  return <Group gap="xl" ps="xl"  justify="center">{stats}</Group>;
 }
 
-const mockdata = [
-  { description: 'Sun and sea', title: 'Beach vacation', image: icons.sea },
-  { description: 'Sightseeing', title: 'City trips', image: icons.city },
-  { description: 'Mountains', title: 'Hiking vacation', image: icons.mountain },
-  { description: 'Snow and ice', title: 'Winter vacation', image: icons.winter },
-];
-
-export function ImageCheckboxes() {
-  const items = mockdata.map((item) => <ImageCheckbox {...item} key={item.title} />);
-  return <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }}>{items}</SimpleGrid>;
-}
-
-
-export default ImageCheckboxes;
+export default ContinueBox;
