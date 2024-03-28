@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 import { Stack } from '@mantine/core';
 
@@ -45,14 +46,14 @@ const user = {
 };
 
 const tabs = [
-    'Home',
-    'RWS',
-    'Education',
-    'Community',
-    'Forums',
-    'Support',
-    'Account',
-    'Helpdesk',
+    { label: 'Home', href: '/' },
+    { label: 'RWS', href: '/RWS' },
+    { label: 'Education', href: '/education' },
+    { label: 'Community', href: '/community' },
+    { label: 'Forums', href: '/forums' },
+    { label: 'Support', href: '/support' },
+    { label: 'Account', href: '/account' },
+    { label: 'Helpdesk', href: '/helpdesk' },
 ];
 
 export function HeaderTabs() {
@@ -61,9 +62,11 @@ export function HeaderTabs() {
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
     const items = tabs.map((tab) => (
-        <Tabs.Tab value={tab} key={tab}>
-            {tab}
-        </Tabs.Tab>
+        <Tabs.Tab value={tab.label} key={tab.label}>
+            <Link href={tab.href}>
+                {tab.label}
+            </Link>
+        </Tabs.Tab> 
     ));
 
     return (
