@@ -74,3 +74,10 @@
     display: none;
   }
 }
+
+
+.removeDecoration {
+  text-decoration: none;
+  color: inherit;
+}
+

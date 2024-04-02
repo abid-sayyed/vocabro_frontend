@@ -8,9 +8,14 @@ import {
   Container,
   rem,
   useMantineTheme,
+  Button,
 } from '@mantine/core';
 import { IconGauge, IconUser, IconCookie } from '@tabler/icons-react';
 import classes from './BookSelection.module.css';
+import { useEffect, useState } from 'react';
+
+import BookList from '@/components/RWS/BookSelection/BookList';
+import UploadYours from '@/components/RWS/UploadYours';
 
 
 
@@ -35,7 +40,77 @@ const mockdata = [
   },
 ];
 
-export function BookSelection() {
+
+
+interface Book {
+  id: number;
+  title: string;
+  fileName: string;
+  // Add other properties of the book object here
+}
+
+
+interface BookSelectionArray{
+  books: Book[]; // Array of Book objects
+}
+
+// export const getStaticProps = async () => {
+//   const res = await fetch("http://127.0.0.1:5000/books/");
+//   const data = await res.json();
+
+//   console.log(data,"abid here");
+//   console.log("abid here");
+//   console.log("abid here");
+
+
+//   return {
+//     props: {
+//       BookList: data,
+//     },
+//   };
+// };
+
+
+
+
+const BookSelection = () => {
+
+  const [data, setData] = useState<Book[]>([]); 
+
+
+  useEffect(() => {
+    // Fetch data when the component mounts
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:5000/books");
+      const data : Book[] = await res.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.error(" abid Error fetching data:", error);
+    }
+  }; 
+
+  //sending this to child component. so when delete happend; so it can retun the callback function back here to fetch the data again
+  const handleChildClick = () => {
+    fetchData();
+  };
+
+    //sending this to child component. so when delete happend; so it can retun the callback function back here to fetch the data again
+    const handleChildClick2 = () => {
+      fetchData();
+    };
+  
+
+
+  //send it to 
+
+
+
+  
   const theme = useMantineTheme();
   const features = mockdata.map((feature) => (
     <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
@@ -54,7 +129,7 @@ export function BookSelection() {
   ));
 
   return (
-    
+
     <Container size="lg" py="xl">
       <Group justify="center">
         <Badge variant="filled" size="lg">
@@ -71,6 +146,20 @@ export function BookSelection() {
         hunger drives it to try biting a Steel-type Pokémon.
       </Text>
 
+      
+
+     
+      <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
+      {data.map((book) => (
+        < BookList key={book.id} book ={book}         onClick={handleChildClick} />
+      ))}
+      </SimpleGrid>
+
+      {/* <Button variant="danger">Danger variant</Button> */}
+
+  
+
+ 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
         {features}
       </SimpleGrid>

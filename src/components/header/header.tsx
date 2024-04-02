@@ -48,8 +48,8 @@ const user = {
 const tabs = [
     { label: 'Home', href: '/' },
     { label: 'RWS', href: '/RWS' },
-    { label: 'Education', href: '/education' },
-    { label: 'Community', href: '/community' },
+    { label: 'ReadMode', href: '/RWS/ReadMode' },
+    { label: 'WriteMode', href: '/RWS/WriteMode' },
     { label: 'Forums', href: '/forums' },
     { label: 'Support', href: '/support' },
     { label: 'Account', href: '/account' },
@@ -63,9 +63,12 @@ export function HeaderTabs() {
 
     const items = tabs.map((tab) => (
         <Tabs.Tab value={tab.label} key={tab.label}>
-            <Link href={tab.href}>
+        
+            <Link href={tab.href} className={classes.removeDecoration}>
                 {tab.label}
             </Link>
+
+            
         </Tabs.Tab> 
     ));
 

@@ -1,3 +1,4 @@
+
 .wrapper {
   position: relative;
   margin-bottom: rem(30px);
@@ -18,3 +19,20 @@
   left: calc(50% - rem(125px));
   bottom: rem(-20px);
 }
+
+
+
+
+
+.title {
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+  font-weight: 900;
+}
+
+
+
+
+
+
