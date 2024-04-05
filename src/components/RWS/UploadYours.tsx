@@ -1,22 +1,34 @@
+//react
 import { useRef } from 'react';
 import { useState } from 'react';
+import { useContext } from 'react';
+
+
+//mantine
 import { Text, Group, Button, rem, useMantineTheme } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconCloudUpload, IconX, IconDownload } from '@tabler/icons-react';
 import classes from './UploadYours.module.css';
-
 import { Container, Paper, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import BookSelection from './BookSelection';
+import { createContext } from 'react';
+
+
+//components
+import { StateContext } from '@/app/RWS/page';
 
 
 
-export function UploadYours({ onClick }) {
+export function UploadYours() {
+
   const theme = useMantineTheme();
   const openRef = useRef<() => void>(null);
+  const { state, setState } = useContext(StateContext);  //share state betweeen upload and bookselection list
+  const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 
-  //for submitting data:
 
+
+  //form validation
   const form = useForm({
     initialValues: {
       title: '',
@@ -28,44 +40,44 @@ export function UploadYours({ onClick }) {
   });
 
 
+  const handleDrop = (files: File[]) => {
+    setDroppedFiles(files); // Store the dropped files in state
+  };
 
-  
+
+
   //sending to flask server as a post request
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: { title: string }) => {
 
-    
-    // Create a new FormData object
+    if (!droppedFiles.length) {
+      alert('Please select a file to upload');
+    }
+    const formData = new FormData(); 
+    formData.append('file', droppedFiles[0]); // Append the file to the FormData object
+
     const requestData = {
-      fileName: 'pdf',
+      // fileName: 'pdf',
       title: values.title
     };
-    
-    try {
-      console.log(requestData);
 
-      // Send a POST request to the Flask server
+    formData.append('requestData', JSON.stringify(requestData)); // Append the requestData to the FormData object
+
+
+    try {
+      console.log(formData);
       const response = await fetch('http://127.0.0.1:5000/books', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
+        body: formData
       });
-  
-      // Check if the response is successful
       if (!response.ok) {
         throw new Error('Failed to upload file');
+
       }
-  
-      // Parse the JSON response
-      const data = await response.json();
-      console.log(data); // Log the response data
 
-      //sending callback function to other component
-    
-    
-    
 
+      setDroppedFiles([]); // Clear the dropped files
+      form.reset(); // Clear the form
+      setState(true); // on uplaod refresh the book list
 
     } catch (error) {
       console.error(error);
@@ -84,7 +96,7 @@ export function UploadYours({ onClick }) {
           <div className={classes.wrapper}>
             <Dropzone
               openRef={openRef}
-              onDrop={() => { }}
+                onDrop={handleDrop}
               className={classes.dropzone}
               radius="md"
               accept={[MIME_TYPES.pdf]}
@@ -114,7 +126,7 @@ export function UploadYours({ onClick }) {
                 <Text ta="center" fw={700} fz="lg" mt="xl">
                   <Dropzone.Accept>Drop files here</Dropzone.Accept>
                   <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
-                  <Dropzone.Idle>Upload resume</Dropzone.Idle>
+                  <Dropzone.Idle>Upload book</Dropzone.Idle>
                 </Text>
                 <Text ta="center" fz="sm" mt="xs" c="dimmed">
                   Drag&apos;n&apos;drop files here to upload. We can accept only <i>.pdf</i> files that
@@ -129,19 +141,17 @@ export function UploadYours({ onClick }) {
           </div>
 
 
-          
+
           <TextInput label="Title"
             placeholder="you@mantine.dev" required
             {...form.getInputProps('title')}
 
           />
 
-          
+
           <Button type='submit' fullWidth mt="xl">
             Upload
           </Button>
-
-
 
         </Paper>
 

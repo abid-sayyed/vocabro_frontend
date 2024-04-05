@@ -16,8 +16,10 @@ import { useEffect, useState } from 'react';
 
 import BookList from '@/components/RWS/BookSelection/BookList';
 import UploadYours from '@/components/RWS/UploadYours';
+import { createContext } from 'react';
+import { useContext } from 'react';
 
-
+import { StateContext } from '@/app/RWS/page';
 
 const mockdata = [
   {
@@ -50,7 +52,7 @@ interface Book {
 }
 
 
-interface BookSelectionArray{
+interface BookSelectionArray {
   books: Book[]; // Array of Book objects
 }
 
@@ -75,7 +77,9 @@ interface BookSelectionArray{
 
 const BookSelection = () => {
 
-  const [data, setData] = useState<Book[]>([]); 
+  const [data, setData] = useState<Book[]>([]);
+
+  const { state, setState } = useContext(StateContext);
 
 
   useEffect(() => {
@@ -83,34 +87,40 @@ const BookSelection = () => {
     fetchData();
   }, []);
 
+
+  useEffect(() => {
+    if (state) {
+      fetchData();
+      // Execute function to set state to false
+      setState(false);
+    }
+  }, [state, setState]);
+
   const fetchData = async () => {
     try {
       const res = await fetch("http://127.0.0.1:5000/books");
-      const data : Book[] = await res.json();
+      const data: Book[] = await res.json();
       setData(data);
       console.log(data);
     } catch (error) {
       console.error(" abid Error fetching data:", error);
     }
-  }; 
+  };
 
   //sending this to child component. so when delete happend; so it can retun the callback function back here to fetch the data again
   const handleChildClick = () => {
     fetchData();
   };
 
-    //sending this to child component. so when delete happend; so it can retun the callback function back here to fetch the data again
-    const handleChildClick2 = () => {
-      fetchData();
-    };
-  
+  //sending this to child component. so when delete happend; so it can retun the callback function back here to fetch the data again
+
 
 
   //send it to 
 
 
 
-  
+
   const theme = useMantineTheme();
   const features = mockdata.map((feature) => (
     <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
@@ -146,20 +156,21 @@ const BookSelection = () => {
         hunger drives it to try biting a Steel-type Pokémon.
       </Text>
 
-      
 
-     
+
+
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
-      {data.map((book) => (
-        < BookList key={book.id} book ={book}         onClick={handleChildClick} />
-      ))}
+        {data.map((book) => (
+          < BookList key={book.id} book={book} onClick={handleChildClick} />
+        ))}
       </SimpleGrid>
 
       {/* <Button variant="danger">Danger variant</Button> */}
 
-  
 
- 
+
+
+
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
         {features}
       </SimpleGrid>

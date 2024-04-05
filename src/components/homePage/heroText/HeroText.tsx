@@ -12,17 +12,16 @@ function HeroText() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Automated AI{' '}
+          Tesing phase for Hero Text{' '}
           <Text component="span" className={classes.highlight} inherit>
-            code reviews
+             reviews
           </Text>{' '}
-          for any stack
+          stack
         </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" c="dimmed" className={classes.description}>
-            Build more reliable software with AI companion. AI is also trained to detect lazy
-            developers who do nothing and just complain on Twitter.
+            Build more reliable software with collaboration. .
           </Text>
         </Container>
 
