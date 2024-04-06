@@ -51,7 +51,9 @@ export function UploadYours() {
 
     if (!droppedFiles.length) {
       alert('Please select a file to upload');
+      return;
     }
+
     const formData = new FormData(); 
     formData.append('file', droppedFiles[0]); // Append the file to the FormData object
 

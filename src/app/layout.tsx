@@ -4,13 +4,26 @@ import '@mantine/core/styles.css';
 import '@mantine/tiptap/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
+//componets
 import ShellLayout from '@/components/shellLayout/ShellLayout';
+
+
+//libraries
+import { pdfjs } from 'react-pdf';
 
 
 export const metadata = {
   title: 'My Mantine app',
   description: 'I have followed setup instructions carefully',
 };
+
+
+// Set up PDF.js worker configuration
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
+
 
 export default function RootLayout({
   children,

@@ -1,6 +1,17 @@
 import { Paper, Text, ThemeIcon, rem } from '@mantine/core';
 import { IconColorSwatch } from '@tabler/icons-react';
 import classes from './ReaderPad.module.css';
+import { pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
+import PdfReacer from '@/components/RWS/Read/pdfReader';
+
+
+// Set up PDF.js worker configuration
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
+
 
 export function ReaderPad() {
   return (
