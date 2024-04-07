@@ -83,3 +83,12 @@
       }
     }
   }
+
+
+
+
+  .car {
+    margin: 0 auto;
+    height: 100% !important;
+    border: 2px solid red;
+}

@@ -3,14 +3,10 @@ import { IconColorSwatch } from '@tabler/icons-react';
 import classes from './ReaderPad.module.css';
 import { pdfjs } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
-import PdfReacer from '@/components/RWS/Read/pdfReader';
+import PdfReader from '@/components/RWS/Read/pdfReader';
+import { ScrollArea } from '@mantine/core';
 
 
-// Set up PDF.js worker configuration
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
 
 
 export function ReaderPad() {
@@ -28,55 +24,7 @@ export function ReaderPad() {
         Theming documentation
       </Text>
       <Text size="sm" mt="sm" c="dimmed">
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
-
-
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
+       
 
 
         Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
@@ -86,7 +34,17 @@ export function ReaderPad() {
 
         
       </Text>
+
+
+
+
+    <ScrollArea h={595}  type="always" offsetScrollbars scrollHideDelay={6000} classNames={classes}>
+    <PdfReader />
+    </ScrollArea>
+
+
     </Paper>
+    
   );
 }
 

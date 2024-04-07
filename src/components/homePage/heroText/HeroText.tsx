@@ -1,6 +1,11 @@
 import { Title, Text, Button, Container } from '@mantine/core';
 import { Dots } from './Dots';
 import classes from './HeroText.module.css';
+import PdfReader from '@/components/RWS/Read/pdfReader';
+import { ScrollArea } from '@mantine/core';
+import { Card } from '@mantine/core';
+import { Paper } from '@mantine/core';
+
 
 function HeroText() {
   return (
@@ -34,7 +39,10 @@ function HeroText() {
           </Button>
         </div>
       </div>
+
+
     </Container>
+    
   );
 }
 

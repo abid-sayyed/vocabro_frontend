@@ -3,27 +3,70 @@
 import { useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
-import pdf from '@/assets/abid_resume.pdf';
+import { useEffect } from 'react';
 
-let pdfFile: string = "./assets/abid_resume.pdf";
+import classes from './pdfReader.module.css';
+
+
+
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
 
 function PdfReader() {
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
 
+
+
+  const [isMobile, setIsMobile] = useState<boolean>(false); // State to track if it's mobile
+
+  // Function to handle resizing and update isMobile state
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768); // Assuming 768 as the threshold for mobile devices
+  };
+
+  // Effect to add event listener on mount and remove on unmount
+  useEffect(() => {
+    handleResize(); // Call to initially set isMobile state
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty dependency array ensures effect runs only once on mount
+
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
   }
 
+
   return (
-    <div>
-      <Document file="pdfFile" onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} />
+
+    <div className={classes.card}>
+
+      <Document file="/book/review.pdf" onLoadSuccess={onDocumentLoadSuccess}   >
+
+
+
+        {Array.apply(null, Array(numPages))
+          .map((x, i) => i + 1)
+          .map((page) => (
+            
+            
+            <Page key={page} pageNumber={page} width={isMobile ? 350 : 850} /> 
+          ))}
+        pageNumber
+
       </Document>
       <p>
         Page {pageNumber} of {numPages}
       </p>
+
+
+
     </div>
+
   );
 }
 
