@@ -4,6 +4,10 @@ import '@mantine/core/styles.css';
 import '@mantine/tiptap/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
+//3. awarness
+import PdfContextProvider from '@/context/PdfContextProvider';
+import CorrectionOpenApiProvider from '@/context/CorrectionOpenApiProvider';
+
 //componets
 import ShellLayout from '@/components/shellLayout/ShellLayout';
 
@@ -39,9 +43,17 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider>
-          <ShellLayout>
-            {children}
-          </ShellLayout>
+
+          <PdfContextProvider>
+            <CorrectionOpenApiProvider>
+
+            <ShellLayout>
+              {children}
+            </ShellLayout>
+            
+            </CorrectionOpenApiProvider>
+
+          </PdfContextProvider>
 
         </MantineProvider>
       </body>

@@ -116,11 +116,6 @@ const BookSelection = () => {
 
 
 
-  //send it to 
-
-
-
-
   const theme = useMantineTheme();
   const features = mockdata.map((feature) => (
     <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
@@ -158,7 +153,6 @@ const BookSelection = () => {
 
 
 
-
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
         {data.map((book) => (
           < BookList key={book.id} book={book} onClick={handleChildClick} />
@@ -166,8 +160,6 @@ const BookSelection = () => {
       </SimpleGrid>
 
       {/* <Button variant="danger">Danger variant</Button> */}
-
-
 
 
 

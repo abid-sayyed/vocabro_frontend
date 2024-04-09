@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 import { useEffect } from 'react';
+
+
 
 import classes from './pdfReader.module.css';
 
@@ -11,18 +13,31 @@ import classes from './pdfReader.module.css';
 
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
+import PdfContext from '@/context/PdfContext';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 
-function PdfReader() {
-  const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
+function PdfReader({}) {
+
 
 
 
   const [isMobile, setIsMobile] = useState<boolean>(false); // State to track if it's mobile
+  const [numPages, setNumPages] = useState<number>();
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
+  const [file , setFile] = useState('');
+  
+  const { pdf }: { pdf: string } = useContext(PdfContext);
+
+
+
+
+
+
+
 
   // Function to handle resizing and update isMobile state
   const handleResize = () => {
@@ -42,11 +57,15 @@ function PdfReader() {
 
 
   return (
+  
 
     <div className={classes.card}>
 
-      <Document file="/book/review.pdf" onLoadSuccess={onDocumentLoadSuccess}   >
 
+      
+     
+
+      <Document file={pdf}  onLoadSuccess={onDocumentLoadSuccess}   >
 
 
         {Array.apply(null, Array(numPages))

@@ -21,7 +21,6 @@ function Forums() {
 
 
             <ScrollArea h={595}  type="always" offsetScrollbars scrollHideDelay={6000} >
-    <PdfReader />
     </ScrollArea>
 
         </Stack>

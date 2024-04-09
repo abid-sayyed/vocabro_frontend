@@ -50,8 +50,8 @@ const tabs = [
     { label: 'RWS', href: '/RWS' },
     { label: 'ReadMode', href: '/RWS/ReadMode' },
     { label: 'WriteMode', href: '/RWS/WriteMode' },
+    { label: 'Improve', href: '/RWS/ImproveMode' },
     { label: 'Forums', href: '/forums' },
-    { label: 'Support', href: '/support' },
     { label: 'Account', href: '/account' },
     { label: 'Helpdesk', href: '/helpdesk' },
 ];

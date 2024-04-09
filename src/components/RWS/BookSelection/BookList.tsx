@@ -12,6 +12,11 @@ import {
   rem,
 } from '@mantine/core';
 import classes from './BookList.module.css'
+import Link from 'next/link';
+import PdfReader from '@/components/RWS/Read/pdfReader';
+import { useContext, useState } from 'react';
+import PdfContext from '@/context/PdfContext';
+import { useEffect } from 'react';
 
 interface Book {
   title: string;
@@ -20,8 +25,39 @@ interface Book {
 }
 
 export function BookList({ book, onClick }: { book: Book; onClick: () => void }) {
-  const linkProps = { href: 'https://mantine.dev', target: '_blank', rel: 'noopener noreferrer' };
+
+
+
+
+  const linkProps = { href: '/RWS/ReadMode', rel: 'noopener noreferrer' };
   const theme = useMantineTheme();
+
+  const { setPdf } = useContext(PdfContext);
+
+  const loadTheBook = async (bookId: Number) => {
+    try {
+      const res = await fetch(`http://127.0.0.1:5000/books/getbookpdf/${bookId}`);
+      console.log("hello ji2", res);
+      if (!res.ok) {
+        throw new Error('Failed to fetch book');
+      }
+
+      const bookData = await res.blob();
+      const bookurl = window.URL.createObjectURL(bookData);
+      console.log("cur url", bookurl);
+
+      setPdf(bookurl);
+
+      console.log('Loaded Book:', bookData);
+    } catch (error) {
+      console.error('Error loading the book:', error);
+    }
+  };
+
+
+
+
+
 
 
   const handleDeleteClick = async (book: number) => {    try {
@@ -48,14 +84,17 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
 
 
 
+
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
-        <a {...linkProps}>
+        <Link {...linkProps}
+       onClick={() => loadTheBook(book.id)}
+        >
           <Image src="https://i.imgur.com/Cij5vdL.png" height={180} />
-        </a>
+        </Link>
       </Card.Section>
-
+{/*  */}
       <Badge className={classes.rating} variant="gradient" gradient={{ from: 'yellow', to: 'red' }}>
         outstanding
       </Badge>
