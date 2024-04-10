@@ -1,49 +1,39 @@
-import { RichTextEditor, Link } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
+'use client';
+import { RichTextEditor, Link as MantineLink } from '@mantine/tiptap';
+import { EditorContent, useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
-import { useRichTextEditorContext } from '@mantine/tiptap';
-import { useState } from 'react';
+
 import { Button } from '@mantine/core';
 import { Group } from '@mantine/core';
 import { Space } from '@mantine/core';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import CorrectionOpenApi from '@/context/CorrectionOpenApi';
-import { useEffect } from 'react';
+
+
+import Link from 'next/link';
 
 
 
 
-
-
-
-
-
-
-
-let content =
-  '<h2 style="text-align: center;">Welcome to Write Mode</h2><p>Please write the story you understand in your own words. Don\'t worry even if you make a lot of mistakes now, but in the future, you will surely improve if you continue this exercise</p>';
 
 
 function WritePad() {
 
+  const correctionOpenApi = useContext(CorrectionOpenApi);
 
-
-  const { correctionfetchData }  = useContext(CorrectionOpenApi);
-
-
-
-
-
-  const [clearMessage, setClearMessage] = useState(); // State variable for tracking whether content is cleared
-
-  const [editorContent, setEditorContent] = useState(); // State variable for storing editor content
-
-
+  const {
+    correctionfetchData,
+    clearMesg,
+    setClearMesg,
+    editorContent,
+    setEditorContent,
+    
+  } = correctionOpenApi || { correctionfetchData: () => {}, clearMesg: false, setClearMesg: () => {}, editorContent: '', setEditorContent: () => {} };
 
 
 
@@ -51,37 +41,36 @@ function WritePad() {
     extensions: [
       StarterKit,
       Underline,
-      Link,
+      MantineLink,
       Superscript,
       SubScript,
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content,
+    content : editorContent,
     onFocus({ editor, event }) {
 
       // The editor is focused.
-      if (!clearMessage) {
+      if (!clearMesg) {
         editor.commands.clearContent()
-        setClearMessage(true); // Update clearMessage state to true
+        setEditorContent("")
+
+        setClearMesg(true); // Update clearMessage state to true
       }
     },
+
     onUpdate({ editor }) {
-      setEditorContent(editor.view.dom.innerText);
-      content =  editorContent
-      console.log(editor.view.dom.innerText)
+      setEditorContent(editor.view.dom.innerText)
+      // The editor content was updated.
     },
+
+
   }
 
   );
 
+  const linkProps = { href: '/RWS/ImproveMode', rel: 'noopener noreferrer' };
 
-  useEffect(() => {
-    // Reset clearMessage state when component unmounts
-    return () => {
-      setClearMessage(false);
-    };
-  }, []); // Empty dependency array ensures this effect runs only once after initial mount
 
 
 
@@ -141,18 +130,22 @@ function WritePad() {
       <Space h="md" />
       <Group justify="flex-end">
 
-
+      <Link {...linkProps} >
         <Button
           variant="gradient"
           gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
           onClick={() => {
-            correctionfetchData(editor.view.dom.innerText)
-            
-            console.log(editor.view.dom.innerText)
+            correctionfetchData(editorContent)
+  
+          
+            console.log(editorContent)
           }}
+          
         >
           Submit
         </Button>
+        </Link>
+
       </Group>
 
 

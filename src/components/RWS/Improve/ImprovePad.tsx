@@ -8,6 +8,10 @@ import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import CorrectionOpenApi from '@/context/CorrectionOpenApi';
 import { useContext } from 'react';
+import { useEffect } from 'react';
+
+import { LoadingOverlay, Button, Group, Box } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 
 
@@ -18,11 +22,14 @@ import { useContext } from 'react';
 function WritePad() {
 
 
-    const { currData }  = useContext(CorrectionOpenApi);
-    const content = currData;
+
+  const correctionOpenApi = useContext(CorrectionOpenApi);
+
+// Destructure currData with default value if correctionOpenApi is undefined
+const { currData, fetching }: { currData: string, fetching: boolean } = correctionOpenApi || { currData: "", fetching: false };
 
 
-
+    // const { currData }  = useContext(CorrectionOpenApi);
 
 
   const editor = useEditor({
@@ -35,11 +42,26 @@ function WritePad() {
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content,
+    content: '',
+    
+
   });
 
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(currData);
+    }
+  }, [editor, currData]);
+
+
+
   return (
+ 
+
     <RichTextEditor editor={editor}>
+    <LoadingOverlay visible={fetching} loaderProps={{ children: 'improving...' }} />
+
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
@@ -87,6 +109,8 @@ function WritePad() {
 
       <RichTextEditor.Content />
     </RichTextEditor>
+
+
   );
 }
 
