@@ -36,6 +36,7 @@ import {
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 import classes from './HeaderTabs.module.css';
+import { useEffect } from 'react';
 
 
 
@@ -61,15 +62,30 @@ export function HeaderTabs() {
     const [opened, { toggle }] = useDisclosure(false);
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
+    const [activeTab, setActiveTab] = useState(() => {
+        // Initialize activeTab from session storage, if available
+        return sessionStorage.getItem('activeTab') || 'Home';
+    });
+
+    // Save activeTab to session storage whenever it changes
+    useEffect(() => {
+        sessionStorage.setItem('activeTab', activeTab);
+    }, [activeTab]);
+
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    };
+
+
     const items = tabs.map((tab) => (
-        <Tabs.Tab value={tab.label} key={tab.label}>
-        
+        <Tabs.Tab value={tab.label} key={tab.label} onClick={() => handleTabClick(tab.label)} >
+
             <Link href={tab.href} className={classes.removeDecoration}>
                 {tab.label}
             </Link>
 
-            
-        </Tabs.Tab> 
+
+        </Tabs.Tab>
     ));
 
     return (
@@ -207,13 +223,15 @@ export function HeaderTabs() {
 
             <Container size="md">
                 <Tabs
-                    defaultValue="Home"
+                    defaultValue= {activeTab}
                     variant="outline"
                     visibleFrom={opened ? undefined : 'sm'}
                     classNames={{
                         root: classes.tabs,
                         list: classes.tabsList,
                         tab: classes.tab,
+
+
                     }}
                 >
                     <Tabs.List>{items}</Tabs.List>

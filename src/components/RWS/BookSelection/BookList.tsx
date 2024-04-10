@@ -91,7 +91,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
         <Link {...linkProps}
        onClick={() => loadTheBook(book.id)}
         >
-          <Image src="https://i.imgur.com/Cij5vdL.png" height={180} />
+          <Image src="https://i.imgur.com/Cij5vdL.png"  alt="Description of the image" height={180} />
         </Link>
       </Card.Section>
 {/*  */}
@@ -127,7 +127,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
         <Group gap={8} mr={0}>
           <ActionIcon className={classes.action} onClick={() => handleDeleteClick(book.id)}>
             <div >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trash">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" />
                 <path d="M10 11l0 6" /><path d="M14 11l0 6" />
                 <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
