@@ -145,7 +145,7 @@ export function UploadYours() {
 
 
           <TextInput label="Title"
-            placeholder="you@mantine.dev" required
+            placeholder="Enter Book Title" required
             {...form.getInputProps('title')}
 
           />

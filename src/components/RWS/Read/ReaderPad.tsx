@@ -5,6 +5,7 @@ import { pdfjs } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
 import PdfReader from '@/components/RWS/Read/pdfReader';
 import { ScrollArea } from '@mantine/core';
+import { Space } from '@mantine/core';
 
 
 
@@ -21,16 +22,14 @@ export function ReaderPad() {
         <IconColorSwatch style={{ width: rem(28), height: rem(28) }} stroke={1.5} />
       </ThemeIcon>
       <Text size="xl" fw={500} mt="md">
-        Theming documentation
+       2. Read Mode
       </Text>
-      <Text size="sm" mt="sm" c="dimmed">
+      <Text size="md" mt="sm" mb="lg" c="dimmed">
        
 
 
-        Extend default theme with any amount of additional colors, replace shadows, radius, spacing,
-        fonts and many other properties to match your design requirements. Mantine theme is just an
-        object, you can subscribe to it in any part of application via context and use it to build
-        your own components.
+      Begin reading your selected book. Read a bit at a time and try to remember the story. 
+      Don't worry about memorizing every detail. Just focus on understanding the story. You can write down hints to help you remember for the next step.
 
         
       </Text>

@@ -37,13 +37,16 @@ import { MantineLogo } from '@mantinex/mantine-logo';
 
 import classes from './HeaderTabs.module.css';
 import { useEffect } from 'react';
+import { Image } from '@mantine/core';
+
 
 
 
 const user = {
-    name: 'Jane Spoonfighter',
-    email: 'janspoon@fighter.dev',
-    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
+    name: 'Abid Sayyed',
+    email: 'abidsayyed101@gmail.comSSSSS',
+    image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+
 };
 
 const tabs = [
@@ -52,9 +55,9 @@ const tabs = [
     { label: 'ReadMode', href: '/RWS/ReadMode' },
     { label: 'WriteMode', href: '/RWS/WriteMode' },
     { label: 'Improve', href: '/RWS/ImproveMode' },
-    { label: 'Forums', href: '/forums' },
-    { label: 'Account', href: '/account' },
-    { label: 'Helpdesk', href: '/helpdesk' },
+    // { label: 'Forums', href: '/forums' },
+    // { label: 'Account', href: '/account' },
+    // { label: 'Helpdesk', href: '/helpdesk' },
 ];
 
 export function HeaderTabs() {
@@ -63,11 +66,9 @@ export function HeaderTabs() {
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
     const [activeTab, setActiveTab] = useState(() => {
-        // Initialize activeTab from session storage, if available
         return sessionStorage.getItem('activeTab') || 'Home';
     });
 
-    // Save activeTab to session storage whenever it changes
     useEffect(() => {
         sessionStorage.setItem('activeTab', activeTab);
     }, [activeTab]);
@@ -92,7 +93,17 @@ export function HeaderTabs() {
         <div className={classes.header}>
             <Container className={classes.mainSection} size="md">
                 <Group justify="space-between">
-                    <MantineLogo size={28} />
+                    <Image
+                        radius="md"
+                        h={30}
+                        w="auto"
+                        fit="contain"
+                        src="/logo/logo3.png"
+                        alt="Mantine logo"
+                    />
+
+
+                    {/* <MantineLogo size={28} /> */}
 
                     <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
                     <Group>
@@ -129,7 +140,7 @@ export function HeaderTabs() {
                                     <MobileToggleDarkMode />
                                 </Stack>
 
-                                <Menu.Item
+                                {/* <Menu.Item
                                     leftSection={
                                         <IconHeart
                                             style={{ width: rem(16), height: rem(16) }}
@@ -161,7 +172,7 @@ export function HeaderTabs() {
                                     }
                                 >
                                     Your comments
-                                </Menu.Item>
+                                </Menu.Item> */}
 
                                 <Menu.Label>Settings</Menu.Label>
                                 <Menu.Item
@@ -223,7 +234,7 @@ export function HeaderTabs() {
 
             <Container size="md">
                 <Tabs
-                    defaultValue= {activeTab}
+                    defaultValue={activeTab}
                     variant="outline"
                     visibleFrom={opened ? undefined : 'sm'}
                     classNames={{

@@ -12,7 +12,7 @@ const CorrectionOpenApiProvider = ({ children }: { children: ReactNode }) => {
   const [clearMesg, setClearMesg] = useState(false); // store three thing, write data, improved data and function to fetch data
 
   let mesgForuser =
-    '<h2 style="text-align: center;">Welcome to Write Mode</h2><p>Please write the story you understand in your own words. Don\'t worry even if you make a lot of mistakes now, but in the future, you will surely improve if you continue this exercise</p>';
+    '<h2 style="text-align: center;">3. Welcome to Write Mode</h2><p>Please write the story you understand in your own words. You can take help from the hint pad for writing. Don\'t worry even if you make a lot of mistakes now, but in the future, you will surely improve if you continue this exercise</p>';
 
   const [editorContent, setEditorContent] = useState<string>(mesgForuser); // State variable for storing editor content
 

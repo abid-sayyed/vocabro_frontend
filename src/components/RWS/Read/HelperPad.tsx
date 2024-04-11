@@ -4,8 +4,8 @@ function HelperPad() {
   return (
     <>
       <Textarea
-        placeholder="Autosize with no rows limit"
-        label="Autosize with no rows limit"
+        placeholder=""
+        label="Dictionary Pad"
         autosize
 
       />

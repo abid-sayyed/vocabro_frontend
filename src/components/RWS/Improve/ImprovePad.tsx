@@ -10,8 +10,9 @@ import CorrectionOpenApi from '@/context/CorrectionOpenApi';
 import { useContext } from 'react';
 import { useEffect } from 'react';
 
-import { LoadingOverlay, Button, Group, Box } from '@mantine/core';
+import { LoadingOverlay, Button, Group, Box, Space } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { Title } from '@mantine/core';
 
 
 
@@ -25,11 +26,11 @@ function WritePad() {
 
   const correctionOpenApi = useContext(CorrectionOpenApi);
 
-// Destructure currData with default value if correctionOpenApi is undefined
-const { currData, fetching }: { currData: string, fetching: boolean } = correctionOpenApi || { currData: "", fetching: false };
+  // Destructure currData with default value if correctionOpenApi is undefined
+  const { currData, fetching }: { currData: string, fetching: boolean } = correctionOpenApi || { currData: "", fetching: false };
 
 
-    // const { currData }  = useContext(CorrectionOpenApi);
+  // const { currData }  = useContext(CorrectionOpenApi);
 
 
   const editor = useEditor({
@@ -43,7 +44,7 @@ const { currData, fetching }: { currData: string, fetching: boolean } = correcti
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     content: '',
-    
+
 
   });
 
@@ -57,10 +58,20 @@ const { currData, fetching }: { currData: string, fetching: boolean } = correcti
 
 
   return (
- 
+    <>
+
+    <Box bg="" mb="md" >
+          <Title order={1}>4. Improve Mode</Title>
+          <Space h="md" />
+          <Title order={6}>Here is your corrected version Review where you made mistakes and try to avoid repeating them in the future. Repeat the exercise for further improvement.</Title>
+
+    </Box>
+
 
     <RichTextEditor editor={editor}>
-    <LoadingOverlay visible={fetching} loaderProps={{ children: 'improving...' }} />
+      
+
+    <LoadingOverlay visible={fetching} loaderProps={{ children: 'Improving...' }} />
 
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
@@ -110,7 +121,7 @@ const { currData, fetching }: { currData: string, fetching: boolean } = correcti
       <RichTextEditor.Content />
     </RichTextEditor>
 
-
+    </>
   );
 }
 

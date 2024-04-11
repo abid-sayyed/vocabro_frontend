@@ -91,7 +91,9 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
         <Link {...linkProps}
        onClick={() => loadTheBook(book.id)}
         >
-          <Image src="https://i.imgur.com/Cij5vdL.png"  alt="Description of the image" height={180} />
+          {/* <Image src="https://i.imgur.com/Cij5vdL.png"  alt="Description of the image" height={180} /> */}
+          <Image src="/book/pdfthumb.png"  alt="Description of the image" height={180} />
+
         </Link>
       </Card.Section>
 {/*  */}
@@ -104,7 +106,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
       </Text>
 
       <Text fz="sm" c="dimmed" lineClamp={4}>
-        {book.title}  {book.fileName} Resident Evil Village is a direct sequel to 2017’s Resident Evil 7, but takes a very
+        Resident Evil Village is a direct sequel to 2017’s Resident Evil 7, but takes a very
         different direction to its predecessor, namely the fact that this time round instead of
         fighting against various mutated zombies, you’re now dealing with more occult enemies like
         werewolves and vampires.
@@ -119,7 +121,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
             mr="xs"
           />
           <Text fz="sm" inline>
-            Bill Wormeater
+            Abid
           </Text>
         </Center>
 

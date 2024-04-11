@@ -138,17 +138,16 @@ const BookSelection = () => {
     <Container size="lg" py="xl">
       <Group justify="center">
         <Badge variant="filled" size="lg">
-          Best company ever
+          1. Selection Mode
         </Badge>
       </Group>
 
       <Title order={2} className={classes.title} ta="center" mt="sm">
-        Integrate effortlessly with any technology stack
+      Select a book or material that interests you, or upload your own above.
       </Title>
 
       <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when
-        hunger drives it to try biting a Steel-type Pokémon.
+      Choosing the right material is crucial. We ensure to provide the best, easy-to-read content that keeps you engaged.
       </Text>
 
 
@@ -162,10 +161,10 @@ const BookSelection = () => {
       {/* <Button variant="danger">Danger variant</Button> */}
 
 
-
+{/* 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
         {features}
-      </SimpleGrid>
+      </SimpleGrid> */}
     </Container>
   );
 }

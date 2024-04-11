@@ -5,6 +5,8 @@ import PdfReader from '@/components/RWS/Read/pdfReader';
 import { ScrollArea } from '@mantine/core';
 import { Card } from '@mantine/core';
 import { Paper } from '@mantine/core';
+import Link from 'next/link';
+import { Space } from '@mantine/core';
 
 
 function HeroText() {
@@ -17,32 +19,44 @@ function HeroText() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Tesing phase for Hero Text{' '}
+          Want to Improve your{' '}
           <Text component="span" className={classes.highlight} inherit>
-             reviews
+            Communication?
           </Text>{' '}
-          stack
+          {/* stack */}
         </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" c="dimmed" className={classes.description}>
-            Build more reliable software with collaboration. .
+            Master this exercise and unleash your potential!
           </Text>
         </Container>
 
         <div className={classes.controls}>
+          <Link href='/RWS' passHref>
+          
           <Button className={classes.control} size="lg" variant="default" color="gray">
             Start
           </Button>
+          </Link>
+
+          <Space w="md" />
+
+
+          <Link href='/RWS' passHref>
+
+
           <Button className={classes.control} size="lg">
             Continue
           </Button>
+
+          </Link>
         </div>
       </div>
 
 
     </Container>
-    
+
   );
 }
 

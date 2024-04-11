@@ -75,12 +75,11 @@ function PdfReader({}) {
             
             <Page key={page} pageNumber={page} width={isMobile ? 350 : 850} /> 
           ))}
-        pageNumber
 
       </Document>
-      <p>
+      {/* <p>
         Page {pageNumber} of {numPages}
-      </p>
+      </p> */}
 
 
 

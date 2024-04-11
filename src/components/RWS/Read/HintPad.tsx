@@ -20,8 +20,8 @@ function HintPad() {
   return (
     <>
       <Textarea
-        placeholder="Autosize with no rows limit"
-        label="Autosize with no rows limit"
+        placeholder=""
+        label="Hint Pad"
         autosize
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}

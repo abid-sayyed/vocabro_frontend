@@ -10,7 +10,10 @@
 
 } */
 .borderb{
-    border: 2px solid white;
-    margin: 10px;
+    /* border: 2px solid white; */
+    margin-left: 10px;
+    margin-right: 10px;
+  
     
 }
+
