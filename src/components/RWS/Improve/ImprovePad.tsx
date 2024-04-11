@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { LoadingOverlay, Button, Group, Box, Space } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Title } from '@mantine/core';
+import { Stack } from '@mantine/core';
 
 
 
@@ -60,12 +61,17 @@ function WritePad() {
   return (
     <>
 
-    <Box bg="" mb="md" >
+    {/* <Box bg="" mb="md"  > */}
+    <Stack
+      bg="var(--mantine-color-body)"
+      align="center"
+    >
           <Title order={1}>4. Improve Mode</Title>
-          <Space h="md" />
           <Title order={6}>Here is your corrected version Review where you made mistakes and try to avoid repeating them in the future. Repeat the exercise for further improvement.</Title>
 
-    </Box>
+    </Stack>
+    <Space h="md" />
+
 
 
     <RichTextEditor editor={editor}>
