@@ -69,7 +69,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
         headers: {
           'Content-Type': 'application/json'
         }
-      });
+      }).catch(() => fetch('https://vocabro.pythonanywhere.com/books/${book}'));
   
       // Check if the response is successful
       if (!response.ok) {
