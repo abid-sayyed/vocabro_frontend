@@ -42,7 +42,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>
+        <MantineProvider  defaultColorScheme="dark">
 
           <PdfContextProvider>
             <CorrectionOpenApiProvider>
