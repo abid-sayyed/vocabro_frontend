@@ -36,7 +36,9 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
 
   const loadTheBook = async (bookId: Number) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/books/getbookpdf/${bookId}`);
+      const res = await fetch(`http://127.0.0.1:5000/books/getbookpdf/${bookId}`)
+      .catch(() => fetch('https://https://vocabro.pythonanywhere.com/books/getbookpdf/${bookId}'));
+
       console.log("hello ji2", res);
       if (!res.ok) {
         throw new Error('Failed to fetch book');
