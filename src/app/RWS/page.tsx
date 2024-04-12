@@ -1,7 +1,9 @@
 'use client';
 
 //react
-import React, { createContext, useState } from 'react';
+import React, {  useState } from 'react';
+import { createContext, Context } from 'react';
+
 
 //mantine
 import { Divider, Box } from '@mantine/core';
@@ -12,12 +14,14 @@ import { Group } from '@mantine/core';
 import UploadYours from "@/components/RWS/UploadYours";
 import BookSelection from "@/components/RWS/BookSelection";
 import ImageCheckboxes from "@/components/RWS/ContinueBox";
+import StateContext from "@/context/bookStateContext";
+
 
 
 
 
 //for auto refreshing the book list after uploading and deleting a book
-export const StateContext = createContext();
+
 
   
 export default function Home() {
