@@ -9,8 +9,9 @@ import { Flex, Button } from '@mantine/core';
 import { Container } from '@mantine/core';
 import { Grid } from '@mantine/core';
 import { SimpleGrid } from '@mantine/core';
-import classes from '@/components/shellLayout/shellLayout.module.css';
+import classes from './shellLayout.module.css';
 import { Stack } from '@mantine/core';
+
 
 
 
