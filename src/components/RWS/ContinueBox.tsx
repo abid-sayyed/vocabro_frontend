@@ -44,9 +44,9 @@ export function ContinueBox() {
             align="center"
             gap='xs'
           >
-            <Chip defaultChecked radius="xs" variant="light">Awesome chip</Chip>
-            <Chip defaultChecked radius="xs">Awesome chip</Chip>
-            <Chip defaultChecked radius="xs">Awesome chip</Chip>
+            <Chip defaultChecked radius="xs" variant="light">Read Mode</Chip>
+            <Chip defaultChecked radius="xs">Write Mode</Chip>
+            <Chip defaultChecked radius="xs">Improve Mode</Chip>
 
           </Stack>
 

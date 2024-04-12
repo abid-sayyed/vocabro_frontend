@@ -38,13 +38,15 @@ import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './HeaderTabs.module.css';
 import { useEffect } from 'react';
 import { Image } from '@mantine/core';
+import { usePathname } from 'next/navigation'
+
 
 
 
 
 const user = {
     name: 'Abid Sayyed',
-    email: 'abidsayyed101@gmail.comSSSSS',
+    email: 'abidsayyed101@gmail.com',
     image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
 
 };
@@ -65,21 +67,24 @@ export function HeaderTabs() {
     const [opened, { toggle }] = useDisclosure(false);
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-    const [activeTab, setActiveTab] = useState(() => {
-        return sessionStorage.getItem('activeTab') || 'Home';
-    });
+    const [activeTab, setActiveTab] = useState<string | null>('first');
+    const pathname = usePathname()
+
 
     useEffect(() => {
-        sessionStorage.setItem('activeTab', activeTab);
-    }, [activeTab]);
+        const currentTab = tabs.find((tab) => tab.href === pathname);
+        if (currentTab) {
+            setActiveTab(currentTab.label);
+        }
+    }, [pathname]);
+    
 
-    const handleTabClick = (tab) => {
-        setActiveTab(tab);
-    };
 
 
     const items = tabs.map((tab) => (
-        <Tabs.Tab value={tab.label} key={tab.label} onClick={() => handleTabClick(tab.label)} >
+        <Tabs.Tab value={tab.label} key={tab.label} 
+        
+        >
 
             <Link href={tab.href} className={classes.removeDecoration}>
                 {tab.label}
@@ -234,7 +239,10 @@ export function HeaderTabs() {
 
             <Container size="md">
                 <Tabs
-                    defaultValue={activeTab}
+                
+                    value= {activeTab}            //accept string
+                    onChange={setActiveTab}      //accept function returning string
+                                    
                     variant="outline"
                     visibleFrom={opened ? undefined : 'sm'}
                     classNames={{

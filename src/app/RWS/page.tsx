@@ -17,13 +17,7 @@ import ImageCheckboxes from "@/components/RWS/ContinueBox";
 
 
 //for auto refreshing the book list after uploading and deleting a book
-export const StateContext = createContext<{
-    state: boolean;
-    setState: React.Dispatch<React.SetStateAction<boolean>>;
-  }>({
-    state: false,
-    setState: () => {}
-  });
+export const StateContext = createContext();
 
   
 export default function Home() {

@@ -27,9 +27,8 @@ export function ReaderPad() {
       <Text size="md" mt="sm" mb="lg" c="dimmed">
        
 
-
       Begin reading your selected book. Read a bit at a time and try to remember the story. 
-      Don't worry about memorizing every detail. Just focus on understanding the story. You can write down hints to help you remember for the next step.
+      Don&apos;t worry about memorizing every detail. Just focus on understanding the story. You can write down hints to help you remember for the next step.
 
         
       </Text>

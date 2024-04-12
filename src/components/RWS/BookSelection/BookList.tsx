@@ -121,7 +121,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
             mr="xs"
           />
           <Text fz="sm" inline>
-            Abid
+            Abids
           </Text>
         </Center>
 
