@@ -1,4 +1,4 @@
-import { Title, Text, Button, Container } from '@mantine/core';
+import { Title, Text, Button, Container, Group } from '@mantine/core';
 import { Dots } from './Dots';
 import classes from './HeroText.module.css';
 import PdfReader from '@/components/RWS/Read/pdfReader';
@@ -33,24 +33,28 @@ function HeroText() {
         </Container>
 
         <div className={classes.controls}>
+
+        <Group justify="center">
+
+
+
           <Link href='/RWS' passHref>
-          
           <Button className={classes.control} size="lg" variant="default" color="gray">
             Start
           </Button>
           </Link>
 
-          <Space w="md" />
+
 
 
           <Link href='/RWS' passHref>
-
-
           <Button className={classes.control} size="lg">
             Continue
           </Button>
-
           </Link>
+
+          </Group>
+
         </div>
       </div>
 
