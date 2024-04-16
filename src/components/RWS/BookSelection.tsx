@@ -101,8 +101,8 @@ const BookSelection = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:5000/books")
-      .catch(() => fetch("https://vocabro.pythonanywhere.com/books"));
+      const res = await fetch("https://vocabro.pythonanywhere.com/books");
+      // .catch(() => fetch("http://127.0.0.1:5000/books"));
 
       const data: Book[] = await res.json();
       setData(data);

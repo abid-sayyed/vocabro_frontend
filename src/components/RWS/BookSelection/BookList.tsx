@@ -36,9 +36,7 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
 
   const loadTheBook = async (bookId: Number) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/books/getbookpdf/${bookId}`)
-      .catch(() => fetch('https://https://vocabro.pythonanywhere.com/books/getbookpdf/${bookId}'));
-
+      const res = await fetch(`https://https://vocabro.pythonanywhere.com/books/getbookpdf/${bookId}`);
       console.log("hello ji2", res);
       if (!res.ok) {
         throw new Error('Failed to fetch book');
@@ -64,12 +62,12 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
 
   const handleDeleteClick = async (book: number) => {    try {
       // Send a DELETE request to the Flask server to delete the book with the specified ID
-      const response = await fetch(`http://127.0.0.1:5000/books/${book}`, {
+      const response = await fetch(`https://vocabro.pythonanywhere.com/books/${book}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         }
-      }).catch(() => fetch('https://vocabro.pythonanywhere.com/books/${book}'));
+      });
   
       // Check if the response is successful
       if (!response.ok) {

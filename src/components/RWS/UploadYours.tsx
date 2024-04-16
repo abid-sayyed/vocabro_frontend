@@ -68,10 +68,10 @@ export function UploadYours() {
 
     try {
       console.log(formData);
-      const response = await fetch('http://127.0.0.1:5000/books', {
+      const response = await fetch('https://vocabro.pythonanywhere.com/books', {
         method: 'POST',
         body: formData
-      }).catch(() => fetch('https://vocabro.pythonanywhere.com/books'));
+      });
 
       if (!response.ok) {
         throw new Error('Failed to upload file');
