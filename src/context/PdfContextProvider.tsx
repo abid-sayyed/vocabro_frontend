@@ -6,7 +6,7 @@ import PdfContext from "./PdfContext";
 
 
 const PdfContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [pdf, setPdf] = useState("/book/review.pdf");
+    const [pdf, setPdf] = useState("");
 
   return (
     <PdfContext.Provider value={{ pdf, setPdf }}>
