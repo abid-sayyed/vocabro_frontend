@@ -1,6 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+Front-end: https://vocabro-frontend-j4gk.vercel.app 
+Backend: https://vocabro.pythonanywhere.com/books
+
+Developed Vocabro, a web-based application aimed at improving communication skills through RWI (Read, Write, and Improve) exercises.
+Utilized Next.js for frontend development and Flask for backend development, integrating the Claude API for language processing and Mantine UI for the user interface.
+Implemented features allowing users to upload and store materials, read them online, and write about them, with an AI service providing error correction.
+
+
+
 
 First, run the development server:
 
