@@ -16,6 +16,7 @@ import { createContext } from 'react';
 
 //components
 import StateContext from "@/context/bookStateContext";
+import { env } from 'process';
 
 
 
@@ -26,6 +27,9 @@ export function UploadYours() {
   const openRef = useRef<() => void>(null);
   const { state, setState } = useContext(StateContext);  //share state betweeen upload and bookselection list
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
+
+
+console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`,"abb");
 
 
 
@@ -65,10 +69,9 @@ export function UploadYours() {
 
     formData.append('requestData', JSON.stringify(requestData)); // Append the requestData to the FormData object
 
-
     try {
       console.log(formData);
-      const response = await fetch('https://vocabro.pythonanywhere.com/books', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`, {
         method: 'POST',
         body: formData
       });
@@ -77,8 +80,6 @@ export function UploadYours() {
         throw new Error('Failed to upload file');
 
       }
-
-
       setDroppedFiles([]); // Clear the dropped files
       form.reset(); // Clear the form
       setState(true); // on uplaod refresh the book list
