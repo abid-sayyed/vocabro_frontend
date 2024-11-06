@@ -1,4 +1,6 @@
-import { IconBookmark, IconHeart, IconShare } from '@tabler/icons-react';
+/** @format */
+
+import { IconBookmark, IconHeart, IconShare } from "@tabler/icons-react";
 import {
   Card,
   Image,
@@ -10,13 +12,13 @@ import {
   Avatar,
   useMantineTheme,
   rem,
-} from '@mantine/core';
-import classes from './BookList.module.css'
-import Link from 'next/link';
-import PdfReader from '@/components/RWS/Read/pdfReader';
-import { useContext, useState } from 'react';
-import PdfContext from '@/context/PdfContext';
-import { useEffect } from 'react';
+} from "@mantine/core";
+import classes from "./BookList.module.css";
+import Link from "next/link";
+import PdfReader from "@/components/RWS/Read/pdfReader";
+import { useContext, useState } from "react";
+import PdfContext from "@/context/PdfContext";
+import { useEffect } from "react";
 
 interface Book {
   title: string;
@@ -24,22 +26,31 @@ interface Book {
   id: number;
 }
 
-export function BookList({ book, onClick }: { book: Book; onClick: () => void }) {
+export function BookList({
+  book,
+  onClick,
+}: {
+  book: Book;
+  onClick: () => void;
+}) {
+  console.log("serverbook", book);
 
-
-
-
-  const linkProps = { href: '/RWS/ReadMode', rel: 'noopener noreferrer' };
+  const linkProps = { href: "/RWS/ReadMode", rel: "noopener noreferrer" };
   const theme = useMantineTheme();
 
   const { setPdf } = useContext(PdfContext);
 
-  const loadTheBook = async (bookId: Number) => {
+  const loadTheBook = async (fileName: string) => {
     try {
-      const res = await fetch(`https://vocabro.pythonanywhere.com/books/getbookpdf/${bookId}`);
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`);
+      // const res = await fetch(`https://vocabro.pythonanywhere.com/books/getbookpdf/${bookId}`);
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book/${fileName}`
+      );
       console.log("hello ji2", res);
       if (!res.ok) {
-        throw new Error('Failed to fetch book');
+        throw new Error("Failed to fetch book");
       }
 
       const bookData = await res.blob();
@@ -48,56 +59,55 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
 
       setPdf(bookurl);
 
-      console.log('Loaded Book:', bookData);
+      console.log("Loaded Book:", bookData);
     } catch (error) {
-      console.error('Error loading the book:', error);
+      console.error("Error loading the book:", error);
     }
   };
 
-
-
-
-
-
-
-  const handleDeleteClick = async (book: number) => {    try {
+  const handleDeleteClick = async (book: number) => {
+    try {
       // Send a DELETE request to the Flask server to delete the book with the specified ID
-      const response = await fetch(`https://vocabro.pythonanywhere.com/books/${book}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `https://vocabro.pythonanywhere.com/books/${book}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-  
+      );
+
       // Check if the response is successful
       if (!response.ok) {
-        throw new Error('Failed to delete book');
+        throw new Error("Failed to delete book");
       }
-  
+
       console.log("Book deleted successfully");
       onClick();
     } catch (error) {
-      console.error('There was a problem with the delete request:', error);
+      console.error("There was a problem with the delete request:", error);
     }
-  }
-
-
-
-
+  };
 
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
-        <Link {...linkProps}
-       onClick={() => loadTheBook(book.id)}
-        >
+        <Link {...linkProps} onClick={() => loadTheBook(book.fileName)}>
           {/* <Image src="https://i.imgur.com/Cij5vdL.png"  alt="Description of the image" height={180} /> */}
-          <Image src="/book/pdfthumb.png"  alt="Description of the image" height={180} />
-
+          <Image
+            src="/book/pdfthumb.png"
+            alt="Description of the image"
+            height={180}
+          />
         </Link>
       </Card.Section>
-{/*  */}
-      <Badge className={classes.rating} variant="gradient" gradient={{ from: 'yellow', to: 'red' }}>
+      {/*  */}
+      <Badge
+        className={classes.rating}
+        variant="gradient"
+        gradient={{ from: "yellow", to: "red" }}
+      >
         outstanding
       </Badge>
 
@@ -106,10 +116,11 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
       </Text>
 
       <Text fz="sm" c="dimmed" lineClamp={4}>
-        Resident Evil Village is a direct sequel to 2017’s Resident Evil 7, but takes a very
-        different direction to its predecessor, namely the fact that this time round instead of
-        fighting against various mutated zombies, you’re now dealing with more occult enemies like
-        werewolves and vampires.
+        Resident Evil Village is a direct sequel to 2017’s Resident Evil 7, but
+        takes a very different direction to its predecessor, namely the fact
+        that this time round instead of fighting against various mutated
+        zombies, you’re now dealing with more occult enemies like werewolves and
+        vampires.
       </Text>
 
       <Group justify="space-between" className={classes.footer}>
@@ -125,13 +136,28 @@ export function BookList({ book, onClick }: { book: Book; onClick: () => void })
           </Text>
         </Center>
 
-
         <Group gap={8} mr={0}>
-          <ActionIcon className={classes.action} onClick={() => handleDeleteClick(book.id)}>
-            <div >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" />
-                <path d="M10 11l0 6" /><path d="M14 11l0 6" />
+          <ActionIcon
+            className={classes.action}
+            onClick={() => handleDeleteClick(book.id)}
+          >
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="red"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M4 7l16 0" />
+                <path d="M10 11l0 6" />
+                <path d="M14 11l0 6" />
                 <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                 <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
               </svg>

@@ -101,7 +101,8 @@ const BookSelection = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("https://vocabro.pythonanywhere.com/books");
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`);
       // .catch(() => fetch("http://127.0.0.1:5000/books"));
 
       const data: Book[] = await res.json();
