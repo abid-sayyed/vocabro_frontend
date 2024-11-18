@@ -7,6 +7,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 //3. awarness
 import PdfContextProvider from '@/context/PdfContextProvider';
 import CorrectionOpenApiProvider from '@/context/CorrectionOpenApiProvider';
+import AuthenticationContextProvider from '@/context/AuthenticationProvider';
 
 //componets
 import ShellLayout from '@/components/shellLayout/ShellLayout';
@@ -42,20 +43,21 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider  defaultColorScheme="dark">
+        <AuthenticationContextProvider>
+          <MantineProvider defaultColorScheme="dark">
+            <PdfContextProvider>
+              <CorrectionOpenApiProvider>
 
-          <PdfContextProvider>
-            <CorrectionOpenApiProvider>
+                <ShellLayout>
+                  
+                  {children}
+                </ShellLayout>
 
-            <ShellLayout>
-              {children}
-            </ShellLayout>
-            
-            </CorrectionOpenApiProvider>
+              </CorrectionOpenApiProvider>
+            </PdfContextProvider>
+          </MantineProvider>
+        </AuthenticationContextProvider>
 
-          </PdfContextProvider>
-
-        </MantineProvider>
       </body>
     </html>
   );

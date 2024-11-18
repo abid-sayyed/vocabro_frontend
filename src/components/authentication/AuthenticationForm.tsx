@@ -1,8 +1,9 @@
 
-
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { useRouter } from 'next/navigation'
+import { useContext } from 'react';
+import AuthenticationContextValue from '@/context/AuthenticationContext';
 
 
 import {
@@ -25,6 +26,8 @@ import { TwitterButton } from './TwitterButton';
 export default function AuthenticationForm(props: PaperProps) {
   const [type, toggle] = useToggle(['login', 'register']);
   const router = useRouter()
+  const { loginState, setLoginState } = useContext(AuthenticationContextValue);
+
 
   const form = useForm({
     initialValues: {
@@ -44,7 +47,7 @@ export default function AuthenticationForm(props: PaperProps) {
 
   const formSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  
+
     if (!form.values.terms) {
       alert('Please accept terms and conditions');
       return;
@@ -60,11 +63,14 @@ export default function AuthenticationForm(props: PaperProps) {
     })
 
 
-
     if (response.status === 200) {
-      form.reset(); // Reset form values
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("isLoggedIn", JSON.stringify(true));
+      }
+      setLoginState(true);
+      form.reset(); 
       console.log('Successabid', response);
-      // router.push(`/`) // Navigate to the new post page
+      router.push(`/`) // Navigate to the new post page
     } else {
       // Handle errors
     }

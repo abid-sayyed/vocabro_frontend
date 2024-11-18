@@ -8,8 +8,22 @@ import { Paper } from '@mantine/core';
 import Link from 'next/link';
 import { Space } from '@mantine/core';
 
+import { HttpHookService } from '@/services/HttpHookService';
+
 
 function HeroText() {
+
+  const { authGet } = HttpHookService();
+
+
+  const test = async () => {
+    const test = await authGet('/protected')
+    console.log(test, "abidauthget protectedroute");
+  }
+
+  test()
+
+
   return (
     <Container className={classes.wrapper} size={1400}>
       <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
@@ -34,24 +48,24 @@ function HeroText() {
 
         <div className={classes.controls}>
 
-        <Group justify="center">
+          <Group justify="center">
 
 
 
-          <Link href='/RWS' passHref>
-          <Button className={classes.control} size="lg" variant="default" color="gray">
-            Start
-          </Button>
-          </Link>
+            <Link href='/RWS' passHref>
+              <Button className={classes.control} size="lg" variant="default" color="gray">
+                Start
+              </Button>
+            </Link>
 
 
 
 
-          <Link href='/RWS' passHref>
-          <Button className={classes.control} size="lg">
-            Continue
-          </Button>
-          </Link>
+            <Link href='/RWS' passHref>
+              <Button className={classes.control} size="lg">
+                Continue
+              </Button>
+            </Link>
 
           </Group>
 
