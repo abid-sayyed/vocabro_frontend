@@ -13,16 +13,6 @@ import { HttpHookService } from '@/services/HttpHookService';
 
 function HeroText() {
 
-  const { authGet } = HttpHookService();
-
-
-  const test = async () => {
-    const test = await authGet('/protected')
-    console.log(test, "abidauthget protectedroute");
-  }
-
-  test()
-
 
   return (
     <Container className={classes.wrapper} size={1400}>

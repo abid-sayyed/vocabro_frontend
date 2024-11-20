@@ -32,8 +32,8 @@ function WritePad() {
     setClearMesg,
     editorContent,
     setEditorContent,
-    
-  } = correctionOpenApi || { correctionfetchData: () => {}, clearMesg: false, setClearMesg: () => {}, editorContent: '', setEditorContent: () => {} };
+
+  } = correctionOpenApi || { correctionfetchData: () => { }, clearMesg: false, setClearMesg: () => { }, editorContent: '', setEditorContent: () => { } };
 
 
 
@@ -47,7 +47,7 @@ function WritePad() {
       Highlight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content : editorContent,
+    content: editorContent,
     onFocus({ editor, event }) {
 
       // The editor is focused.
@@ -130,20 +130,17 @@ function WritePad() {
       <Space h="md" />
       <Group justify="flex-end">
 
-      <Link {...linkProps} >
-        <Button
-          variant="gradient"
-          gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-          onClick={() => {
-            correctionfetchData(editorContent)
-  
-          
-            console.log(editorContent)
-          }}
-          
-        >
-          Submit
-        </Button>
+        <Link {...linkProps} >
+          <Button
+            variant="gradient"
+            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+            onClick={() => {
+              correctionfetchData(editorContent)
+            }}
+
+          >
+            Submit
+          </Button>
         </Link>
 
       </Group>

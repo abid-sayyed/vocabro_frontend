@@ -13,13 +13,11 @@ export const HttpService = async (
   headers: Record<string, string> = {},
   special?: boolean
 ) => {
-  console.log("loginStateabid inside http", loginState);
 
   const isAuthRequired = requiresAuth === "AUTH";
 
   // If authentication is required and the user is not logged in, return an error
   if (isAuthRequired && !loginState) {
-    console.log("value:", isAuthRequired, loginState);
     return {
       status: 401,
       message: "You need to login to access this resource",

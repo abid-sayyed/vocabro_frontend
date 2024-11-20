@@ -47,7 +47,6 @@ const CorrectionOpenApiProvider = ({ children }: { children: ReactNode }) => {
           }
         ]
       });
-      console.log("alcud ap" , msg.content[0].text);
       setCurrData(msg.content[0].text);
 
       setFetching(false);

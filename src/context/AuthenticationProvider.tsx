@@ -20,8 +20,6 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
   const validateUserUsingRefreshToken = async (): Promise<boolean> => {
     try {
       const response = await sepcialPost("/user/refresh-token");
-      console.log(response, "abidtokennava");
-
       return response.status === 200;
     } catch (error) {
       console.error("Error validating user using refresh token:", error);
@@ -40,6 +38,10 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
   };
 
   useEffect(() => {
+
+    if (!getLoginState()) {
+      return;
+    }
     if (!loginState) {
       updateLoginState(); // Run once on mount if not logged in
     }

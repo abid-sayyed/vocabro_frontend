@@ -53,7 +53,6 @@ export default function AuthenticationForm(props: PaperProps) {
       return;
     }
 
-    console.log(form.values);
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/${type}`, {
       method: 'POST',
@@ -68,7 +67,6 @@ export default function AuthenticationForm(props: PaperProps) {
       }
       setLoginState(true);
       form.reset(); 
-      console.log('Successabid', response);
       router.back(); // This will go back to the previous page/tab
       
     } else {
@@ -79,7 +77,7 @@ export default function AuthenticationForm(props: PaperProps) {
   return (
     <Container size={550} my={40}>
       <Paper radius="md" p="xl" withBorder {...props}>
-        <Text size="lg" fw={500}>
+        {/* <Text size="lg" fw={500}>
           Welcome to Vocabro, {type} with
         </Text>
 
@@ -88,7 +86,7 @@ export default function AuthenticationForm(props: PaperProps) {
           <TwitterButton radius="xl">Twitter</TwitterButton>
         </Group>
 
-        <Divider label="Or continue with email" labelPosition="center" my="lg" />
+        <Divider label="Or continue with email" labelPosition="center" my="lg" /> */}
 
 
         <form

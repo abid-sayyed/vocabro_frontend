@@ -33,7 +33,6 @@ export function BookList({
   book: Book;
   onClick: () => void;
 }) {
-  console.log("serverbook", book);
 
   const linkProps = { href: "/RWS/ReadMode", rel: "noopener noreferrer" };
   const theme = useMantineTheme();
@@ -48,20 +47,16 @@ export function BookList({
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book/${fileName}`
       );
-      console.log("hello ji2", res);
       if (!res.ok) {
         throw new Error("Failed to fetch book");
       }
 
       const bookData = await res.blob();
       const bookurl = window.URL.createObjectURL(bookData);
-      console.log("cur url", bookurl);
 
       setPdf(bookurl);
 
-      console.log("Loaded Book:", bookData);
     } catch (error) {
-      console.error("Error loading the book:", error);
     }
   };
 
@@ -83,7 +78,6 @@ export function BookList({
         throw new Error("Failed to delete book");
       }
 
-      console.log("Book deleted successfully");
       onClick();
     } catch (error) {
       console.error("There was a problem with the delete request:", error);

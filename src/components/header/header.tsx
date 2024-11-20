@@ -79,7 +79,6 @@ export function HeaderTabs() {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [userDetail, setUserDetail] = useState<UserDetail>(defaultUserDetail);
-  console.log(userDetail, "abidprofile");
 
   const [activeTab, setActiveTab] = useState<string | null>("first");
   const pathname = usePathname();
@@ -116,12 +115,11 @@ export function HeaderTabs() {
           localStorage.setItem("isLoggedIn", JSON.stringify(false));
         }
         setLoginState(false);
-        console.log("Logout successful");
         if (typeof window !== "undefined") {
           window.location.reload(); // Refresh the page
         }
       } else {
-        console.log("Logout failed: ", response);
+        console.error("Logout failed: ", response);
       }
     } catch (error) {
       console.error("Logout error: ", error);
@@ -143,7 +141,7 @@ export function HeaderTabs() {
       ),
       labels: { confirm: "Yes, Logout", cancel: "No" },
       confirmProps: { color: "red" },
-      onCancel: () => console.log("Logout canceled"),
+      onCancel: () => null,
       onConfirm: onConfirm,
     });
 
@@ -153,7 +151,6 @@ export function HeaderTabs() {
     const fetchUserDetail = async () => {
       if (loginState) {
         const response = await authGet("/user-detail/profile");
-        console.log(response, "abidprofile");
         response.image = "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png";
         setUserDetail(response);
 
@@ -246,8 +243,26 @@ export function HeaderTabs() {
                   Change account
                 </Menu.Item>
 
-                <Link href="/authentication">
+                {!loginState && (
+                  <Link href="/authentication"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Menu.Item
+                      leftSection={
+                        <IconLogout
+                          style={{ width: rem(16), height: rem(16) }}
+                          stroke={1.5}
+                        />
+                      }
+                    >
+                      Login
+                    </Menu.Item>
+                  </Link>
+                )}
+
+                {loginState && (
                   <Menu.Item
+                    onClick={() => openLogoutModal()}
                     leftSection={
                       <IconLogout
                         style={{ width: rem(16), height: rem(16) }}
@@ -255,21 +270,10 @@ export function HeaderTabs() {
                       />
                     }
                   >
-                    Login
+                    Logout
                   </Menu.Item>
-                </Link>
 
-                <Menu.Item
-                  onClick={() => openLogoutModal()}
-                  leftSection={
-                    <IconLogout
-                      style={{ width: rem(16), height: rem(16) }}
-                      stroke={1.5}
-                    />
-                  }
-                >
-                  Logout
-                </Menu.Item>
+                )}
 
                 <Menu.Divider />
 

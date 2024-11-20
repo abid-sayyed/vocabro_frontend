@@ -107,7 +107,6 @@ const BookSelection = () => {
 
       const data: Book[] = await res.json();
       setData(data);
-      console.log(data);
     } catch (error) {
       console.error(" abid Error fetching data:", error);
     }

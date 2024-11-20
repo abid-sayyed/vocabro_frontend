@@ -7,9 +7,31 @@ import HintPad from '@/components/RWS/Read/HintPad';
 import HelperPad from '@/components/RWS/Read/HelperPad';
 import { Space } from '@mantine/core';
 import WritePad from '@/components/RWS/Write/WritePad';
-
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation'
+import { useContext } from 'react';
+import AuthenticationContextValue from '@/context/AuthenticationContext';
 
 function ReadMode() {
+
+  const { loginState } = useContext(AuthenticationContextValue);
+
+  const router = useRouter();
+
+
+  useEffect(() => {
+
+    if (!loginState) {
+      // Redirect to login page if not authenticated
+      router.push('/authentication');
+    }
+  }, [router]); // Run on mount
+
+
+
+
+
+
   return (
     <>
       <Grid grow>

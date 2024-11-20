@@ -29,8 +29,6 @@ export function UploadYours() {
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
 
 
-console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`,"abb");
-
 
 
   //form validation
@@ -70,7 +68,6 @@ console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`,"abb");
     formData.append('requestData', JSON.stringify(requestData)); // Append the requestData to the FormData object
 
     try {
-      console.log(formData);
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`, {
         method: 'POST',
         body: formData

@@ -24,9 +24,8 @@ export function LogoutModal() {
           localStorage.setItem("isLoggedIn", JSON.stringify(false));
         }
         setLoginState(false);
-        console.log("Logout successful");
       } else {
-        console.log("Logout failed: ", response);
+        console.error("Logout failed: ");
       }
     } catch (error) {
       console.error("Logout error: ", error);
@@ -48,7 +47,7 @@ export function LogoutModal() {
       ),
       labels: { confirm: "Yes, Logout", cancel: "No" },
       confirmProps: { color: "red" },
-      onCancel: () => console.log("Logout canceled"),
+      onCancel: () => null,
       onConfirm: onConfirm,
     });
 
