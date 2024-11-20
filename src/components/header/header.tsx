@@ -36,17 +36,32 @@ import {
 } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
 
+
+import { Button, Loader } from "@mantine/core";
+import { modals } from "@mantine/modals";
+import { useContext } from "react";
+import AuthenticationContextValue from "@/context/AuthenticationContext";
+import { HttpHookService } from "@/services/HttpHookService";
+
+
 import classes from "./HeaderTabs.module.css";
 import { useEffect } from "react";
 import { Image } from "@mantine/core";
 import { usePathname } from "next/navigation";
 
-const user = {
-  name: "Abid Sayyed",
-  email: "abidsayyed101@gmail.com",
+interface UserDetail {
+  username: string;
+  email: string;
+  image: string;
+}
+
+const defaultUserDetail: UserDetail = {
+  username: "Login",
+  email: "",
   image:
     "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png",
 };
+
 
 const tabs = [
   { label: "Home", href: "/" },
@@ -63,9 +78,16 @@ export function HeaderTabs() {
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [userDetail, setUserDetail] = useState<UserDetail>(defaultUserDetail);
+  console.log(userDetail, "abidprofile");
 
   const [activeTab, setActiveTab] = useState<string | null>("first");
   const pathname = usePathname();
+
+  //logut
+  const { authPost, authGet } = HttpHookService();
+  const { setLoginState, loginState } = useContext(AuthenticationContextValue);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const currentTab = tabs.find((tab) => tab.href === pathname);
@@ -81,6 +103,72 @@ export function HeaderTabs() {
       </Link>
     </Tabs.Tab>
   ));
+
+
+  const onConfirm = async () => {
+
+    try {
+      setLoading(true); // Set loading to true when logout starts
+      const response = await authPost("/user/logout");
+
+      if (response.status === 200) {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("isLoggedIn", JSON.stringify(false));
+        }
+        setLoginState(false);
+        console.log("Logout successful");
+        if (typeof window !== "undefined") {
+          window.location.reload(); // Refresh the page
+        }
+      } else {
+        console.log("Logout failed: ", response);
+      }
+    } catch (error) {
+      console.error("Logout error: ", error);
+    } finally {
+      setLoading(false); // Set loading to false once the request completes
+    }
+  };
+
+  const openLogoutModal = () =>
+
+    modals.openConfirmModal({
+      title: "Logout Confirmation",
+      centered: true,
+      children: (
+        <>
+          <Text size="sm">Are you sure you want to logout?</Text>
+          {loading && <Loader size="sm" />}
+        </>
+      ),
+      labels: { confirm: "Yes, Logout", cancel: "No" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Logout canceled"),
+      onConfirm: onConfirm,
+    });
+
+
+
+  useEffect(() => {
+    const fetchUserDetail = async () => {
+      if (loginState) {
+        const response = await authGet("/user-detail/profile");
+        console.log(response, "abidprofile");
+        response.image = "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png";
+        setUserDetail(response);
+
+      } else {
+        setUserDetail(defaultUserDetail);
+      }
+    };
+    fetchUserDetail();
+  }, [loginState]);
+
+
+
+
+
+
 
   return (
     <div className={classes.header}>
@@ -115,13 +203,13 @@ export function HeaderTabs() {
                 >
                   <Group gap={7}>
                     <Avatar
-                      src={user.image}
-                      alt={user.name}
+                      src={userDetail.image}
+                      alt={userDetail.username}
                       radius="xl"
                       size={20}
                     />
                     <Text fw={500} size="sm" lh={1} mr={3}>
-                      {user.name}
+                      {userDetail.username}
                     </Text>
                     <IconChevronDown
                       style={{ width: rem(12), height: rem(12) }}
@@ -159,20 +247,20 @@ export function HeaderTabs() {
                 </Menu.Item>
 
                 <Link href="/authentication">
-
-                <Menu.Item
-                  leftSection={
-                    <IconLogout
-                      style={{ width: rem(16), height: rem(16) }}
-                      stroke={1.5}
-                    />
-                  }
-                >
-                  Login
-                </Menu.Item>
-
+                  <Menu.Item
+                    leftSection={
+                      <IconLogout
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                  >
+                    Login
+                  </Menu.Item>
                 </Link>
+
                 <Menu.Item
+                  onClick={() => openLogoutModal()}
                   leftSection={
                     <IconLogout
                       style={{ width: rem(16), height: rem(16) }}

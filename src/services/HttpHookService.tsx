@@ -13,7 +13,7 @@ export const HttpHookService = () => {
 const authGet = (url: string, headers?: Record<string, string>) =>
   HttpService(loginState, setLoginState, "AUTH", "GET", url, undefined, headers);
 
-const authPost = (url: string, body: unknown, headers?: Record<string, string>) =>
+const authPost = (url: string, body?: unknown, headers?: Record<string, string>) =>
   HttpService(loginState, setLoginState, "AUTH", "POST", url, body, headers);
 
 const authPut = (url: string, body: unknown, headers?: Record<string, string>) =>

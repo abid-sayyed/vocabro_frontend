@@ -62,15 +62,15 @@ export default function AuthenticationForm(props: PaperProps) {
       body: JSON.stringify(form.values),
     })
 
-
     if (response.status === 200) {
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("isLoggedIn", JSON.stringify(true));
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
       }
       setLoginState(true);
       form.reset(); 
       console.log('Successabid', response);
-      router.push(`/`) // Navigate to the new post page
+      router.back(); // This will go back to the previous page/tab
+      
     } else {
       // Handle errors
     }

@@ -3,6 +3,8 @@
 import '@mantine/core/styles.css';
 import '@mantine/tiptap/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+
 
 //3. awarness
 import PdfContextProvider from '@/context/PdfContextProvider';
@@ -45,6 +47,8 @@ export default function RootLayout({
       <body>
         <AuthenticationContextProvider>
           <MantineProvider defaultColorScheme="dark">
+          <ModalsProvider>
+
             <PdfContextProvider>
               <CorrectionOpenApiProvider>
 
@@ -55,6 +59,8 @@ export default function RootLayout({
 
               </CorrectionOpenApiProvider>
             </PdfContextProvider>
+            </ModalsProvider>
+
           </MantineProvider>
         </AuthenticationContextProvider>
 

@@ -5,10 +5,10 @@ import AuthenticationContext from "./AuthenticationContext";
 import { HttpHookService } from "@/services/HttpHookService";
 
 const AuthenticationContextProvider = ({ children }: { children: ReactNode }) => {
-  // Helper function to get login state from sessionStorage
+  // Helper function to get login state from localStorage
   const getLoginState = (): boolean => {
     if (typeof window !== "undefined") {
-      const storedLoginState = sessionStorage.getItem("isLoggedIn");
+      const storedLoginState = localStorage.getItem("isLoggedIn");
       return storedLoginState ? JSON.parse(storedLoginState) : false;
     }
     return false;
@@ -33,7 +33,7 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
     if (!loginState) {
       const isValid = await validateUserUsingRefreshToken();
       if (isValid) {
-        sessionStorage.setItem("isLoggedIn", JSON.stringify(true));
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
         setLoginState(true);
       }
     }
@@ -54,7 +54,7 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
       const interval = setInterval(async () => {
         const isValid = await validateUserUsingRefreshToken();
         if (!isValid) {
-          sessionStorage.setItem("isLoggedIn", JSON.stringify(false));
+          localStorage.setItem("isLoggedIn", JSON.stringify(false));
           setLoginState(false);
         }
       }, 10 * 60 * 1000); // Refresh every 10 minutes
