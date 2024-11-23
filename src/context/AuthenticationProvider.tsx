@@ -27,13 +27,16 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
     }
   };
 
+  //first time login state update
   const updateLoginState = async () => {
     if (!loginState) {
       const isValid = await validateUserUsingRefreshToken();
       if (isValid) {
         localStorage.setItem("isLoggedIn", JSON.stringify(true));
         setLoginState(true);
-      }
+      }else {
+        localStorage.setItem("isLoggedIn", JSON.stringify(false)); // login state is already false
+    }
     }
   };
 
@@ -42,8 +45,8 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
     if (!getLoginState()) {
       return;
     }
-    if (!loginState) {
-      updateLoginState(); // Run once on mount if not logged in
+    if (!loginState) { // storage login state is true but login state is false. so update it using refresh token
+      updateLoginState();
     }
   }
   , []); 

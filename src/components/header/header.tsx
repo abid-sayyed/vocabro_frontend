@@ -106,6 +106,12 @@ export function HeaderTabs() {
 
   const onConfirm = async () => {
 
+    if (!loginState) {
+      alert("You are not logged in");
+      return;
+    }
+
+
     try {
       setLoading(true); // Set loading to true when logout starts
       const response = await authPost("/user/logout");
