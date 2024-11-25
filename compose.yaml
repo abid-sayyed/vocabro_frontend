@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: 1
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      retries: 3
+    volumes:
+      - ./app:/app

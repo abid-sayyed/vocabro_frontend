@@ -45,7 +45,7 @@ const AuthenticationContextProvider = ({ children }: { children: ReactNode }) =>
     if (!getLoginState()) {
       return;
     }
-    if (!loginState) { // storage login state is true but login state is false. so update it using refresh token
+    if (!loginState || getLoginState()) { // storage login state is true but login state is false. so update it using refresh token
       updateLoginState();
     }
   }

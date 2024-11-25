@@ -113,6 +113,7 @@ export function HeaderTabs() {
 
 
     try {
+      // this is a setLoginState not LoginState see carefully
       setLoading(true); // Set loading to true when logout starts
       const response = await authPost("/user/logout");
 
