@@ -1,0 +1,44 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches: ["prod"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+
+    env:
+      ACTIONS_STEP_DEBUG: true
+      AZURE_SSH_PRIVATE_KEY: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
+      AZURE_SSH_USER: ${{ secrets.AZURE_SSH_USER }}
+      AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Azure VM via SSH
+        run: |
+          # Write the private key to a file
+          echo "$AZURE_SSH_PRIVATE_KEY" > azkey.pem
+          chmod 600 azkey.pem
+
+          # Connect to the Azure VM and execute deployment commands
+          ssh -i ./azkey.pem -o StrictHostKeyChecking=no "$AZURE_SSH_USER"@"$AZURE_VM_IP" <<EOF
+            # Navigate to the project directory
+            cd ./project/vocabro_frontend/ || exit 1
+            
+            # Checkout the correct Git reference (commit or branch)
+            git checkout prod || exit 1
+            git pull origin prod || exit 1
+            
+            # Go to the root directory and build backend
+            cd .. || exit 1
+            make build-frontend || exit 1
+            exit
+          EOF
