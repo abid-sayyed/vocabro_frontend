@@ -8,9 +8,14 @@ services:
       - "3000:3000"
     env_file:
       - .env.production
+    networks:
+      - nginx_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      test: ["CMD", "curl", "-f", "http://20.244.90.220:3000/"]
       interval: 30s
       retries: 3
-    volumes:
-      - ./app:/app
+      
+networks:
+  nginx_network:
+    external: true
+
