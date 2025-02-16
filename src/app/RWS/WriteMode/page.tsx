@@ -18,14 +18,15 @@ function ReadMode() {
 
   const router = useRouter();
 
+// redirect for non-authenticated users
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (!loginState) {
-      // Redirect to login page if not authenticated
-      router.push('/authentication');
-    }
-  }, [router]); // Run on mount
+  //   if (!loginState) {
+  //     // Redirect to login page if not authenticated
+  //     router.push('/authentication');
+  //   }
+  // }, [router]); // Run on mount
 
 
 

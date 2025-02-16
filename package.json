@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.20.2",
+    "@google/generative-ai": "^0.21.0",
     "@mantine/carousel": "^7.6.2",
     "@mantine/charts": "^7.6.2",
     "@mantine/code-highlight": "^7.6.2",
