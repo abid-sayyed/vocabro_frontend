@@ -159,7 +159,7 @@ export function HeaderTabs() {
       }
     };
     fetchUserDetail();
-  }, [loginState]);
+  }, [loginState]);  //Without autGet here, even if loginState changes, the useEffect might be using a new authGet function.and new Functio might have new loginSate data. but if we add authGet, it will cases an infinite loop. so have to find solution for that.
 
   return (
     <div className={classes.header}>
