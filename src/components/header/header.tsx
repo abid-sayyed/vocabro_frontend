@@ -36,13 +36,11 @@ import {
 } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
 
-
 import { Button, Loader } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { useContext } from "react";
 import AuthenticationContextValue from "@/context/AuthenticationContext";
 import { HttpHookService } from "@/services/HttpHookService";
-
 
 import classes from "./HeaderTabs.module.css";
 import { useEffect } from "react";
@@ -61,7 +59,6 @@ const defaultUserDetail: UserDetail = {
   image:
     "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png",
 };
-
 
 const tabs = [
   { label: "Home", href: "/" },
@@ -96,21 +93,20 @@ export function HeaderTabs() {
   }, [pathname]);
 
   const items = tabs.map((tab) => (
+    <Link href={tab.href} key={tab.label} className={classes.removeDecoration}>
     <Tabs.Tab value={tab.label} key={tab.label}>
       <Link href={tab.href} className={classes.removeDecoration}>
         {tab.label}
       </Link>
     </Tabs.Tab>
+    </Link>
   ));
 
-
   const onConfirm = async () => {
-
     if (!loginState) {
       alert("You are not logged in");
       return;
     }
-
 
     try {
       // this is a setLoginState not LoginState see carefully
@@ -136,7 +132,6 @@ export function HeaderTabs() {
   };
 
   const openLogoutModal = () =>
-
     modals.openConfirmModal({
       title: "Logout Confirmation",
       centered: true,
@@ -152,27 +147,19 @@ export function HeaderTabs() {
       onConfirm: onConfirm,
     });
 
-
-
   useEffect(() => {
     const fetchUserDetail = async () => {
       if (loginState) {
         const response = await authGet("/user-detail/profile");
-        response.image = "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png";
+        response.image =
+          "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png";
         setUserDetail(response);
-
       } else {
         setUserDetail(defaultUserDetail);
       }
     };
     fetchUserDetail();
   }, [loginState]);
-
-
-
-
-
-
 
   return (
     <div className={classes.header}>
@@ -251,8 +238,9 @@ export function HeaderTabs() {
                 </Menu.Item>
 
                 {!loginState && (
-                  <Link href="/authentication"
-                    style={{ textDecoration: 'none' }}
+                  <Link
+                    href="/authentication"
+                    style={{ textDecoration: "none" }}
                   >
                     <Menu.Item
                       leftSection={
@@ -279,7 +267,6 @@ export function HeaderTabs() {
                   >
                     Logout
                   </Menu.Item>
-
                 )}
 
                 <Menu.Divider />

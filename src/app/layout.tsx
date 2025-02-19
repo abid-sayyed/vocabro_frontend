@@ -1,29 +1,27 @@
+/** @format */
+
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
-import '@mantine/core/styles.css';
-import '@mantine/tiptap/styles.css';
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { ModalsProvider } from '@mantine/modals';
-
+import "@mantine/core/styles.css";
+import "@mantine/tiptap/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 
 //3. awarness
-import PdfContextProvider from '@/context/PdfContextProvider';
-import CorrectionOpenApiProvider from '@/context/CorrectionOpenApiProvider';
-import AuthenticationContextProvider from '@/context/AuthenticationProvider';
+import PdfContextProvider from "@/context/PdfContextProvider";
+import CorrectionOpenApiProvider from "@/context/CorrectionOpenApiProvider";
+import AuthenticationContextProvider from "@/context/AuthenticationProvider";
 
 //componets
-import ShellLayout from '@/components/shellLayout/ShellLayout';
-
+import ShellLayout from "@/components/shellLayout/ShellLayout";
 
 //libraries
-import { pdfjs } from 'react-pdf';
-
+import { pdfjs } from "react-pdf";
 
 export const metadata = {
-  title: 'My Mantine app',
-  description: 'I have followed setup instructions carefully',
+  title: "Vocabro",
+  description: "Improve your Communication Skills",  
 };
-
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -32,7 +30,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 //   'pdfjs-dist/build/pdf.worker.min.js',
 //   import.meta.url,
 // ).toString();
-
 
 export default function RootLayout({
   children,
@@ -47,25 +44,16 @@ export default function RootLayout({
       <body>
         <AuthenticationContextProvider>
           <MantineProvider defaultColorScheme="dark">
-          <ModalsProvider>
-
-            <PdfContextProvider>
-              <CorrectionOpenApiProvider>
-
-                <ShellLayout>
-                  
-                  {children}
-                </ShellLayout>
-
-              </CorrectionOpenApiProvider>
-            </PdfContextProvider>
+            <ModalsProvider>
+              <PdfContextProvider>
+                <CorrectionOpenApiProvider>
+                  <ShellLayout>{children}</ShellLayout>
+                </CorrectionOpenApiProvider>
+              </PdfContextProvider>
             </ModalsProvider>
-
           </MantineProvider>
         </AuthenticationContextProvider>
-
       </body>
     </html>
   );
-
 }
