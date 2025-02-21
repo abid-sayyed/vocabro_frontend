@@ -1,0 +1,103 @@
+/** @format */
+
+/* Container with subtle border */
+.container {
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Less intense white for dark mode */
+  padding: 16px;
+  border-radius: 8px; /* Slightly rounded corners */
+  max-width: 600px; /* Keeps layout compact */
+}
+
+/* First section: Word and Speaker Icon */
+.firstSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Word section: Title & Phonetic */
+.wordSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wordSection h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff; /* White text for dark mode */
+  margin: 0;
+}
+
+.wordSection p {
+  font-size: 16px;
+  color: #bbb; /* Slightly faded white */
+  margin: 0;
+}
+
+/* Second section: Definitions */
+.secondSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* Reduce gap for compact look */
+  margin-top: 8px;
+}
+
+/* Part of Speech */
+.partOfSpeech {
+  color: #aaa;
+  font-style: italic;
+  font-size: 14px;
+  padding-bottom: 8px;
+}
+
+/* Meaning Box */
+.meaningBox {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Spacing before definition */
+.forSpace {
+  padding-left: 10px;
+}
+
+/* Definition cluster */
+.cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+}
+
+/* Definition with subtle border */
+.definition {
+  border-left: 3px solid #666; /* Google's subtle left-line separator */
+  padding-left: 10px;
+}
+
+.definition p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #ccc;
+  margin: 0;
+}
+
+/* Inline spacing between sentence and quote */
+.spanSpace {
+  display: inline-block;
+  width: 4px; /* Small, controlled space */
+}
+
+.example {
+  font-size: 16px;
+  color: #aaa;
+  margin: 0;
+}
+
+.heading {
+  margin: 0;
+  font-size: 24px;
+  color: #aaa;
+}

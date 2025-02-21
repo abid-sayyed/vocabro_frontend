@@ -12,6 +12,7 @@ import classes from "./pdfReader.module.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import PdfContext from "@/context/PdfContext";
+import HelperPadContext from "@/context/HelperPadContext";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -24,17 +25,28 @@ function PdfReader({}) {
 
   const { pdf }: { pdf: string } = useContext(PdfContext);
 
+  const { setSelectionText } = useContext(HelperPadContext);
   // Function to handle resizing and update isMobile state
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768); // Assuming 768 as the threshold for mobile devices
   };
 
-  // Effect to add event listener on mount and remove on unmount
+  const handleTextSection = async () => {
+    const selectedText = window.getSelection()?.toString().trim();
+    if (!selectedText) return;
+    setSelectionText(selectedText);
+  };
+
   useEffect(() => {
     handleResize(); // Call to initially set isMobile state
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty dependency array ensures effect runs only once on mount
+    document.addEventListener("mouseup", handleTextSection);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("mouseup", handleTextSection);
+    };
+  }, []);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);

@@ -11,6 +11,7 @@ import { ModalsProvider } from "@mantine/modals";
 import PdfContextProvider from "@/context/PdfContextProvider";
 import CorrectionOpenApiProvider from "@/context/CorrectionOpenApiProvider";
 import AuthenticationContextProvider from "@/context/AuthenticationProvider";
+import HelperPadProvider from "@/context/HelperPadProvider";
 
 //componets
 import ShellLayout from "@/components/shellLayout/ShellLayout";
@@ -20,7 +21,7 @@ import { pdfjs } from "react-pdf";
 
 export const metadata = {
   title: "Vocabro",
-  description: "Improve your Communication Skills",  
+  description: "Improve your Communication Skills",
 };
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
@@ -45,11 +46,13 @@ export default function RootLayout({
         <AuthenticationContextProvider>
           <MantineProvider defaultColorScheme="dark">
             <ModalsProvider>
-              <PdfContextProvider>
-                <CorrectionOpenApiProvider>
-                  <ShellLayout>{children}</ShellLayout>
-                </CorrectionOpenApiProvider>
-              </PdfContextProvider>
+              <HelperPadProvider>
+                <PdfContextProvider>
+                  <CorrectionOpenApiProvider>
+                    <ShellLayout>{children}</ShellLayout>
+                  </CorrectionOpenApiProvider>
+                </PdfContextProvider>
+              </HelperPadProvider>
             </ModalsProvider>
           </MantineProvider>
         </AuthenticationContextProvider>
