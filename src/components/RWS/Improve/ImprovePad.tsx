@@ -11,6 +11,7 @@ import SubScript from "@tiptap/extension-subscript";
 import CorrectionOpenApi from "@/context/CorrectionOpenApi";
 import { useContext } from "react";
 import { useEffect } from "react";
+import HelperPadContext from "@/context/HelperPadContext";
 
 import { LoadingOverlay, Button, Group, Box, Space } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -19,6 +20,7 @@ import { Stack } from "@mantine/core";
 
 function WritePad() {
   const correctionOpenApi = useContext(CorrectionOpenApi);
+  const {  setSelectionText } = useContext(HelperPadContext);
 
   // Destructure currData with default value if correctionOpenApi is undefined
   const { currData, fetching }: { currData: string; fetching: boolean } =
@@ -74,6 +76,27 @@ function WritePad() {
       .replace(/\n{2,}/g, "<br>") // Ensure proper spacing
       .trim();
   };
+
+  useEffect(() => {
+    if (!editor) return;
+
+    const handleSelection = () => {
+      const { from, to, empty } = editor.state.selection;
+      if (!empty && from !== to) {
+        const selectedText = editor.state.doc.textBetween(from, to, " ");
+
+        if (selectedText.length > 30) return;
+
+        setSelectionText(selectedText);
+      }
+    };
+
+    document.addEventListener("mouseup", handleSelection);
+
+    return () => {
+      document.removeEventListener("mouseup", handleSelection);
+    };
+  }, [editor, setSelectionText]);
 
   return (
     <>

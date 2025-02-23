@@ -1,30 +1,29 @@
-'use client';
-import { RichTextEditor, Link as MantineLink } from '@mantine/tiptap';
-import { EditorContent, useEditor } from '@tiptap/react';
-import Highlight from '@tiptap/extension-highlight';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import TextAlign from '@tiptap/extension-text-align';
-import Superscript from '@tiptap/extension-superscript';
-import SubScript from '@tiptap/extension-subscript';
+/** @format */
 
-import { Button } from '@mantine/core';
-import { Group } from '@mantine/core';
-import { Space } from '@mantine/core';
-import { useContext, useEffect } from 'react';
-import CorrectionOpenApi from '@/context/CorrectionOpenApi';
+"use client";
+import { RichTextEditor, Link as MantineLink } from "@mantine/tiptap";
+import { EditorContent, useEditor } from "@tiptap/react";
+import Highlight from "@tiptap/extension-highlight";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import Superscript from "@tiptap/extension-superscript";
+import SubScript from "@tiptap/extension-subscript";
 
+import { Button } from "@mantine/core";
+import { Group } from "@mantine/core";
+import { Space } from "@mantine/core";
+import { useContext, useEffect } from "react";
+import CorrectionOpenApi from "@/context/CorrectionOpenApi";
+import HelperPadContext from "@/context/HelperPadContext";
 
-import Link from 'next/link';
-
-
-
-
-
+import Link from "next/link";
+import HelperPad from "../Read/HelperPad";
 
 function WritePad() {
-
   const correctionOpenApi = useContext(CorrectionOpenApi);
+  const {  setSelectionText } = useContext(HelperPadContext);
+  
 
   const {
     correctionfetchData,
@@ -32,10 +31,13 @@ function WritePad() {
     setClearMesg,
     editorContent,
     setEditorContent,
-
-  } = correctionOpenApi || { correctionfetchData: () => { }, clearMesg: false, setClearMesg: () => { }, editorContent: '', setEditorContent: () => { } };
-
-
+  } = correctionOpenApi || {
+    correctionfetchData: () => {},
+    clearMesg: false,
+    setClearMesg: () => {},
+    editorContent: "",
+    setEditorContent: () => {},
+  };
 
   const editor = useEditor({
     extensions: [
@@ -45,34 +47,62 @@ function WritePad() {
       Superscript,
       SubScript,
       Highlight,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: editorContent,
     onFocus({ editor, event }) {
-
       // The editor is focused.
       if (!clearMesg) {
-        editor.commands.clearContent()
-        setEditorContent("")
+        editor.commands.clearContent();
+        setEditorContent("");
 
         setClearMesg(true); // Update clearMessage state to true
       }
     },
 
     onUpdate({ editor }) {
-      setEditorContent(editor.view.dom.innerText)
+      setEditorContent(editor.view.dom.innerText);
       // The editor content was updated.
     },
 
+    // onSelectionUpdate: ({ editor }) => {
 
-  }
+    //   const { from, to, empty } = editor.state.selection;
+    //   if (!empty && from !== to) {
+    //     const selectedText = editor.state.doc.textBetween(from, to, " ");
+    //     setSelectionText(selectedText); 
+    //   }
+    // },
 
-  );
 
-  const linkProps = { href: '/RWS/ImproveMode', rel: 'noopener noreferrer' };
-
+  });
 
 
+  useEffect(() => {
+    if (!editor) return;
+  
+    const handleSelection = () => {
+      const { from, to, empty } = editor.state.selection;
+      if (!empty && from !== to) {
+        const selectedText = editor.state.doc.textBetween(from, to, " ");
+  
+        if (selectedText.length > 30) return;  
+  
+        setSelectionText(selectedText);
+      }
+    };
+  
+    document.addEventListener("mouseup", handleSelection);
+  
+    return () => {
+      document.removeEventListener("mouseup", handleSelection);
+    };
+  }, [editor, setSelectionText]);
+
+  
+
+
+  const linkProps = { href: "/RWS/ImproveMode", rel: "noopener noreferrer" };
 
   return (
     <>
@@ -123,34 +153,23 @@ function WritePad() {
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
-
-
       </RichTextEditor>
 
       <Space h="md" />
       <Group justify="flex-end">
-
-        <Link {...linkProps} >
+        <Link {...linkProps}>
           <Button
             variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+            gradient={{ from: "blue", to: "cyan", deg: 90 }}
             onClick={() => {
-              correctionfetchData(editorContent)
+              correctionfetchData(editorContent);
             }}
-
           >
             Submit
           </Button>
         </Link>
-
       </Group>
-
-
     </>
-
-
-
-
   );
 }
 

@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react';
 import AuthenticationContextValue from '@/context/AuthenticationContext';
+import ModeLayout from '@/components/RWS/ModeLayout';
 
 function ReadMode() {
 
@@ -34,36 +35,8 @@ function ReadMode() {
 
 
   return (
-    <>
-      <Grid grow>
-        <Grid.Col span={{ base: 12, md: 6, lg: 8 }}> <WritePad /> </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
+    <ModeLayout MainComponent={WritePad} />
 
-
-          <Stack
-            h={250}>
-
-            < HintPad />
-
-          </Stack>
-
-          <Space h="md" />
-
-          <Stack>
-
-            < HelperPad />
-
-          </Stack>
-
-
-
-
-
-
-        </Grid.Col>
-      </Grid>
-
-    </>
   );
 }
 

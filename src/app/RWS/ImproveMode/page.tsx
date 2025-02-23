@@ -8,11 +8,13 @@ import ReaderPad from "@/components/RWS/Read/ReaderPad";
 import HintPad from "@/components/RWS/Read/HintPad";
 import HelperPad from "@/components/RWS/Read/HelperPad";
 import { Space } from "@mantine/core";
+import ModeLayout from "@/components/RWS/ModeLayout";
 import ImprovePad from "@/components/RWS/Improve/ImprovePad";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import AuthenticationContextValue from "@/context/AuthenticationContext";
+
 
 function ReadMode() {
   const { loginState } = useContext(AuthenticationContextValue);
@@ -30,24 +32,7 @@ function ReadMode() {
   // }, [router]); // Run on mount
 
   return (
-    <>
-      <Grid grow>
-        <Grid.Col span={{ base: 12, md: 6, lg: 8 }}>
-          <ImprovePad />
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
-          <Stack h={250}>
-            <HintPad />
-          </Stack>
-
-          <Space h="md" />
-
-          <Stack>
-            <HelperPad />
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </>
+    <ModeLayout MainComponent={ImprovePad} />
   );
 }
 

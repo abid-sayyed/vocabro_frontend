@@ -18,6 +18,8 @@ function HelperPad() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!selectedText || selectedText.trim().includes(" ") || selectedText.length > 30) return;
+
       if (!selectedText || selectedText.trim().includes(" ")) return;
       try {
         const response = await fetch(

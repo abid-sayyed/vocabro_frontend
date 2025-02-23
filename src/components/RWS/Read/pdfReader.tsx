@@ -25,17 +25,12 @@ function PdfReader({}) {
 
   const { pdf }: { pdf: string } = useContext(PdfContext);
 
-  const { setSelectionText } = useContext(HelperPadContext);
+  const { handleTextSection } = useContext(HelperPadContext);
   // Function to handle resizing and update isMobile state
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768); // Assuming 768 as the threshold for mobile devices
   };
 
-  const handleTextSection = async () => {
-    const selectedText = window.getSelection()?.toString().trim();
-    if (!selectedText) return;
-    setSelectionText(selectedText);
-  };
 
   useEffect(() => {
     handleResize(); // Call to initially set isMobile state
@@ -46,7 +41,7 @@ function PdfReader({}) {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("mouseup", handleTextSection);
     };
-  }, []);
+  }, [handleTextSection]);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
