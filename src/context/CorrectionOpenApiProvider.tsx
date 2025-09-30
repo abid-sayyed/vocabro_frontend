@@ -5,6 +5,9 @@ import React, { useState } from "react";
 import CorrectionOpenApiContext from "@/context/CorrectionOpenApi";
 import { ReactNode } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+// import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
+
 
 let mesgForuser =
   '<h2 style="text-align: center;">3. Welcome to Write Mode</h2><p>Please write the story you understand in your own words. You can take help from the hint pad for writing. Don\'t worry even if you make a lot of mistakes now, but in the future, you will surely improve if you continue this exercise</p>';
@@ -31,27 +34,39 @@ const CorrectionOpenApiProvider = ({ children }: { children: ReactNode }) => {
 
   `;
 
-  const correctionfetchData = async (sendData: string) => {
-    try {
-      setFetching(true);
 
-      const geminiApiKey = process.env.NEXT_PUBLIC_API_KEY ?? "";
+const correctionfetchData = async (sendData: string) => {
+  try {
+    setFetching(true);
 
-      if (!geminiApiKey) {
-        window.alert("Some technical error occurred from Gemini API.");
-      }
+    const geminiApiKey = process.env.NEXT_PUBLIC_API_KEY ?? "";
 
-      const genAI = new GoogleGenerativeAI(geminiApiKey);
-
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", systemInstruction: prompt, });
-      const result = await model.generateContent(editorContent);
-      setCurrData(result.response.text());
-
+    if (!geminiApiKey) {
+      window.alert("Some technical error occurred from Gemini API.");
       setFetching(false);
-    } catch (error) {
-      window.alert("Some technical error occurred from Gemini API.")
+      return;
     }
-  };
+
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey });
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      config: {
+        systemInstruction: prompt,
+        responseMimeType: "text/plain",
+      },
+      contents: sendData,
+    });
+
+    setCurrData(response.text ?? "");
+    setFetching(false);
+  } catch (error) {
+    console.error(error);
+    window.alert("Some technical error occurred from Gemini API.");
+    setFetching(false);
+  }
+};
+
 
   return (
     <CorrectionOpenApiContext.Provider
